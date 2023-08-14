@@ -1,13 +1,13 @@
-import { MediatorService } from '@app/mediator';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { CreateCourseRequest } from './commands/createCourse/CreateCourseRequest';
 import { CreateCourseCommand } from './commands/createCourse/CreateCourseCommand';
+import { IMediatorService } from '@app/mediator/core/IMediatorService';
 
 @Controller('course')
 export class CourseController {
 
-  constructor(private readonly _mediator: MediatorService) {
-  }
+  @Inject(IMediatorService)
+  private readonly  _mediator: IMediatorService;
 
   @Post()
   async create(@Body() body: CreateCourseRequest) {
