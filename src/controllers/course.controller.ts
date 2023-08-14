@@ -1,7 +1,7 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { CreateCourseRequest } from './commands/createCourse/CreateCourseRequest';
-import { CreateCourseCommand } from './commands/createCourse/CreateCourseCommand';
-import { IMediatorService } from '@app/mediator/core/IMediatorService';
+import { CreateCourseRequest } from '@applications/course/commands/createCourse/CreateCourseRequest';
+import { CreateCourseCommand } from '@applications/course/commands/createCourse/CreateCourseCommand';
+import { IMediatorService } from '@libs/mediator/core/IMediatorService';
 
 @Controller('course')
 export class CourseController {

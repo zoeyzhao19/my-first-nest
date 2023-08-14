@@ -1,8 +1,8 @@
-import type { IRequestHandler } from '@app/mediator'
-import { registerHandler } from '@app/mediator'
+import type { IRequestHandler } from '@libs/mediator'
+import { registerHandler } from '@libs/mediator'
 import { CreateCourseCommand } from './CreateCourseCommand'
 import type { CreateCourseResponse } from './CreateCourseResponse'
-import { CourseService } from '../../course.service'
+import { CourseService } from '@services/course.service'
 import { Injectable } from '@nestjs/common'
 
 @registerHandler(CreateCourseCommand)

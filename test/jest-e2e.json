@@ -11,7 +11,7 @@
     "^.+\\.(t|j)s$": "ts-jest"
   },
   "moduleNameMapper": {
-    "@app/mediator/(.*)": "<rootDir>/../libs/mediator/src/$1",
-    "@app/mediator": "<rootDir>/../libs/mediator/src"
+    "@libs/mediator/(.*)": "<rootDir>/../libs/mediator/src/$1",
+    "@libs/mediator": "<rootDir>/../libs/mediator/src"
   }
 }

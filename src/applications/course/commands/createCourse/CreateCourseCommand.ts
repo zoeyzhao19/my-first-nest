@@ -1,4 +1,4 @@
-import { type IRequest, ResponseFlags } from '@app/mediator'
+import { type IRequest, ResponseFlags } from '@libs/mediator'
 import type { CreateCourseResponse } from './CreateCourseResponse'
 
 export class CreateCourseCommand implements IRequest<CreateCourseResponse> {

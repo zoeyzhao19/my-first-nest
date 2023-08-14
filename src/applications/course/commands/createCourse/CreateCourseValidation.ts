@@ -1,5 +1,5 @@
-import type { IPipeBehavior } from '@app/mediator'
-import { registerPipeline } from '@app/mediator'
+import type { IPipeBehavior } from '@libs/mediator'
+import { registerPipeline } from '@libs/mediator'
 import Joi from 'joi'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { CreateCourseCommand } from './CreateCourseCommand'

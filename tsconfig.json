@@ -19,12 +19,18 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
     "paths": {
-      "@app/mediator": [
+      "@libs/mediator": [
         "libs/mediator/src"
       ],
-      "@app/mediator/*": [
+      "@libs/mediator/*": [
         "libs/mediator/src/*"
-      ]
+      ],
+      "@applications/*": [
+        "src/applications/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
     }
   }
 }

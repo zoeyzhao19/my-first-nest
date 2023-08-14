@@ -72,7 +72,7 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@app/mediator(|/.*)$": "<rootDir>/libs/mediator/src/$1"
+      "^@libs/mediator(|/.*)$": "<rootDir>/libs/mediator/src/$1"
     }
   }
 }
