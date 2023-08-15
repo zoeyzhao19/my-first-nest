@@ -3,24 +3,24 @@ import type { DomainEvent } from './DomainEvent'
 
 // export abstract class AggregateRoot extends Entity
 export abstract class AggregateRoot {
-  private domainEvents: Array<DomainEvent>
+   #domainEvents: Array<DomainEvent>
 
   constructor() {
-    this.domainEvents = []
+    this.#domainEvents = []
   }
 
   abstract toPrimitives(): any
 
   addDomainEvent(event: DomainEvent) {
-    this.domainEvents.push(event)
+    this.#domainEvents.push(event)
   }
 
   /**
    * get all cloned domain events in a entity
    */
   pullDomainEvents(): Array<DomainEvent> {
-    const events = this.domainEvents.slice()
-    this.domainEvents = []
+    const events = this.#domainEvents.slice()
+    this.#domainEvents = []
     return events
   }
 }
