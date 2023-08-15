@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { MediatorService } from './mediator.service';
-import {IMediatorService} from './core/IMediatorService';
+import {IMediatorService} from './';
 
 @Global()
 @Module({
