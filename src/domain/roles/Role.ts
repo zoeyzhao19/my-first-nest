@@ -1,15 +1,21 @@
 import { AggregateRoot } from "@libs/domain";
 import { Permission } from "../permissions/Permission";
+import { Entity, ObjectId, ObjectIdColumn } from "typeorm";
 
+@Entity()
 export class Role extends AggregateRoot {
+  @ObjectIdColumn()
+  public id: ObjectId;
+
   public name: string;
 
   public permissions: Permission[];
 
-  constructor(name: string, permissions: Permission[], id?: string) {
-    super(id);
+  constructor(name: string, permissions: Permission[], id?: ObjectId) {
+    super()
     this.name = name;
     this.permissions = permissions;
+    this.id = id
   }
 
   // static fromPrimitives(plainData: {

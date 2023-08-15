@@ -3,10 +3,9 @@ import type { IRequest } from './core/IRequest';
 import type { IRequestHandler } from './core/handler/IRequestHandler';
 import type { IPipeBehavior } from './core/pipeline/IPipelineBehavior';
 import { ModuleRef } from '@nestjs/core';
-import { IMediatorService } from './core/IMediatorService';
 
 @Injectable()
-export class MediatorService implements IMediatorService {
+export class MediatorService {
   static handlers: Map<
     string,
     { new (): IRequestHandler<IRequest<any>, any> }

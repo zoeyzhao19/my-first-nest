@@ -3,6 +3,6 @@
  */
 export const ResponseFlags = Symbol('RequestFlags');
 
-export interface IRequest<T = any> {
-  [ResponseFlags]?: T;
+export interface IRequest<Response = any> {
+  [ResponseFlags]?: Response;
 }

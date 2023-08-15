@@ -1,7 +1,12 @@
 import { AggregateRoot } from "@libs/domain";
 import { Code } from "./Code";
+import { Entity, ObjectId, ObjectIdColumn } from "typeorm";
 
+@Entity()
 export class Permission extends AggregateRoot {
+
+  @ObjectIdColumn()
+  public id: ObjectId;
   /**
    * 权限码
    */
@@ -12,10 +17,11 @@ export class Permission extends AggregateRoot {
    */
   description: string;
 
-  constructor(code: Code, description: string, id?: string) {
-    super(id);
+  constructor(code: Code, description: string, id?: ObjectId) {
+    super();
     this.code = code;
     this.description = description;
+    this.id = id
   }
 
   // static fromPrimitives(plainData: {

@@ -4,8 +4,12 @@ import { Username } from "./Username";
 import { Password } from "./Password";
 import { Nickname } from "./Nickname";
 import { Email } from "./Email";
+import { Entity, ObjectId, ObjectIdColumn } from "typeorm";
 
+@Entity()
 export class User extends AggregateRoot {
+  @ObjectIdColumn()
+  public id: ObjectId;
 
   /**
    * 用户名
@@ -67,13 +71,14 @@ export class User extends AggregateRoot {
     password: Password,
     nickname: Nickname,
     email: Email,
-    id?: string,
+    id?: ObjectId,
   ) {
-    super(id);
+    super();
     this.username = username;
     this.password = password;
     this.nickname = nickname;
     this.email = email;
+    this.id = id
   }
 
   static create(username: string, password: string, nickname: string, email: string) {

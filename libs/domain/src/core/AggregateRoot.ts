@@ -1,11 +1,11 @@
 import type { DomainEvent } from './DomainEvent'
-import { Entity } from './Entity'
+// import { Entity } from './Entity'
 
-export abstract class AggregateRoot extends Entity {
+// export abstract class AggregateRoot extends Entity
+export abstract class AggregateRoot {
   private domainEvents: Array<DomainEvent>
 
-  constructor(id?: string) {
-    super(id)
+  constructor() {
     this.domainEvents = []
   }
 
