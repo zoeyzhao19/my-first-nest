@@ -12,6 +12,8 @@
   },
   "moduleNameMapper": {
     "@libs/mediator/(.*)": "<rootDir>/../libs/mediator/src/$1",
-    "@libs/mediator": "<rootDir>/../libs/mediator/src"
+    "@libs/mediator": "<rootDir>/../libs/mediator/src",
+    "@libs/domain/(.*)": "<rootDir>/../libs/domain/src/$1",
+    "@libs/domain": "<rootDir>/../libs/domain/src"
   }
 }

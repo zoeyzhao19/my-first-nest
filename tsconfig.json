@@ -31,6 +31,12 @@
       "@services/*": [
         "src/services/*"
       ],
+      "@libs/domain": [
+        "libs/domain/src"
+      ],
+      "@libs/domain/*": [
+        "libs/domain/src/*"
+      ]
     }
   }
 }
