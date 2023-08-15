@@ -17,11 +17,10 @@ export class Permission extends AggregateRoot {
    */
   description: string;
 
-  constructor(code: Code, description: string, id?: ObjectId) {
+  constructor(code: Code, description: string) {
     super();
     this.code = code;
     this.description = description;
-    this.id = id
   }
 
   // static fromPrimitives(plainData: {

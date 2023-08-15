@@ -4,9 +4,7 @@ import crypto from 'crypto'
 
 export class Password extends ValueObject<string> {
   constructor(value: string) {
-    const encrypt_value = Password.encrypt(value)
-    super(encrypt_value)
-    this.ensureLengthIsLessThan20Characters(value)
+    super(value)
   }
 
   static encrypt(value: string) {
@@ -15,8 +13,13 @@ export class Password extends ValueObject<string> {
     return hash.digest('hex');
   }
 
-  private ensureLengthIsLessThan20Characters(value: string): void {
+  static ensureLengthIsLessThan20Characters(value: string): void {
     if (value.length > 20)
       throw new UserError(UserError.PasswordLengthExceeded)
+  }
+
+  static create(value: string) {
+    this.ensureLengthIsLessThan20Characters(value)
+    return new Password(this.encrypt(value))
   }
 }

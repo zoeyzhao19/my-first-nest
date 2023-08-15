@@ -11,11 +11,10 @@ export class Role extends AggregateRoot {
 
   public permissions: Permission[];
 
-  constructor(name: string, permissions: Permission[], id?: ObjectId) {
+  constructor(name: string, permissions: Permission[]) {
     super()
     this.name = name;
     this.permissions = permissions;
-    this.id = id
   }
 
   // static fromPrimitives(plainData: {

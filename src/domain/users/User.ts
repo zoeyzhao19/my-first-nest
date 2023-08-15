@@ -71,22 +71,20 @@ export class User extends AggregateRoot {
     password: Password,
     nickname: Nickname,
     email: Email,
-    id?: ObjectId,
   ) {
     super();
     this.username = username;
     this.password = password;
     this.nickname = nickname;
     this.email = email;
-    this.id = id
   }
 
-  static create(username: string, password: string, nickname: string, email: string) {
+  static create(username: Username, password: Password, nickname: Nickname, email: Email) {
     const user = new User(
-      new Username(username), 
-      new Password(password), 
-      new Nickname(nickname), 
-      new Email(email)
+      username, 
+      password, 
+      nickname, 
+      email
     )
     user.createTime = new Date()
     user.updateTime = new Date()
