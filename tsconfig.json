@@ -31,6 +31,9 @@
       "@services/*": [
         "src/services/*"
       ],
+      "@errors/*": [
+        "src/errors/*"
+      ],
       "@libs/domain": [
         "libs/domain/src"
       ],
