@@ -1,3 +1,7 @@
+import { LoginCommand } from '@applications/user/commands/login/LoginCommand';
+import { LoginRequest } from '@applications/user/commands/login/LoginRequest';
+import { RefreshTokenCommand } from '@applications/user/commands/refreshToken/RefreshTokenCommand';
+import { RefreshTokenRequest } from '@applications/user/commands/refreshToken/RefreshTokenRequest';
 import { RegisterCommand } from '@applications/user/commands/register/RegisterCommand';
 import { RegisterRequest } from '@applications/user/commands/register/RegisterRequest';
 import { SendCaptchaCommand } from '@applications/user/commands/sendCaptcha/SendCaptchaCommand';
@@ -18,12 +22,30 @@ export class UserController {
   }
 
   @Post('register')
-  async register(@Body() registerUser: RegisterRequest) {
+  async register(@Body() body: RegisterRequest) {
     const command = new RegisterCommand({
-      ...registerUser,
-      captcha: +registerUser.captcha
+      ...body,
+      captcha: +body.captcha
     })
     await this._mediator.send(command)
+  }
+
+  @Post('login')
+  async userLogin(@Body() body: LoginRequest) {
+    const command = new LoginCommand(body.username, body.password)
+
+    const result = await this._mediator.send(command)
+
+    return result
+  }
+
+  @Post('token/refresh')
+  async refreshToken(@Body() body: RefreshTokenRequest) {
+    const command = new RefreshTokenCommand(body.refresh_token)
+
+    const result = await this._mediator.send(command)
+
+    return result
   }
 
 }

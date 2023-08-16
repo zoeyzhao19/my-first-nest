@@ -68,4 +68,26 @@ export class UserService {
     user.setRoles(roles)
     await this.userRepository.save(user)
   }
+
+  async login(username: string, password: string) {
+
+    const user = await this.userRepository.findOne({
+      where: {
+        username: {
+          value: username
+        }
+      }
+    })
+
+    if(!user) {
+      throw new UserError(UserError.UserNoExist)
+    }
+
+    const passwordVo = Password.create(password)
+    if(passwordVo.value !== user.password.value) {
+      throw new UserError(UserError.PasswordError)
+    }
+
+    return user
+  }
 }

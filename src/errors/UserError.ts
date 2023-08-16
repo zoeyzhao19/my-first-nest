@@ -9,6 +9,7 @@ export class UserError extends AppError {
   static CaptchaExpired = '验证码已失效'
   static CaptchaIncorrect = '验证码不正确'
   static UserNoExist = '用户不存在'
+  static PasswordError = '密码错误'
 
   constructor(message: string, ...replacers: string[]) {
     super(message, ...replacers)
