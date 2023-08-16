@@ -2,7 +2,9 @@ import { AggregateRoot } from "@libs/domain";
 import { Code } from "./Code";
 import { Entity, ObjectId, ObjectIdColumn } from "typeorm";
 
-@Entity()
+@Entity({
+  name: 'permissions'
+})
 export class Permission extends AggregateRoot {
 
   @ObjectIdColumn()

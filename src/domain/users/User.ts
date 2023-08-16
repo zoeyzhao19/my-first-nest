@@ -7,7 +7,9 @@ import { Email } from "./Email";
 import { Entity, ObjectId, ObjectIdColumn } from "typeorm";
 import { UserRegisteredDomainEvent } from "./events/UserRegisteredDomainEvent";
 
-@Entity()
+@Entity({
+  name: 'users'
+})
 export class User extends AggregateRoot {
   @ObjectIdColumn()
   public id: ObjectId;
@@ -95,6 +97,11 @@ export class User extends AggregateRoot {
     user.addDomainEvent(new UserRegisteredDomainEvent(user))
 
     return user
+  }
+
+  setRoles(roles: Role[]) {
+    this.roles = roles
+    this.updateTime = new Date()
   }
 
   toPrimitives() {
