@@ -18,7 +18,7 @@ export class RegisterCommandHandler implements IRequestHandler<RegisterCommand> 
     const captcha = await this.redisService.get(`captcha_${command.email}`)
 
     if(!captcha) {
-      throw new UserError(UserError.CaptchaInvalid)
+      throw new UserError(UserError.CaptchaExpired)
     }
 
     if(+captcha !== command.captcha) {

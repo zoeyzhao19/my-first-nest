@@ -6,7 +6,7 @@ export class UserError extends AppError {
   static NicknameLengthExceeded = '昵称长度不能超过50个字符'
   static EmailInvalid = '邮箱格式不正确'
   static UsernameOrEmailExisted = '用户名 {username} 或邮箱 {email} 已存在'
-  static CaptchaInvalid = '验证码已失效'
+  static CaptchaExpired = '验证码已失效'
   static CaptchaIncorrect = '验证码不正确'
 
   constructor(message: string, ...replacers: string[]) {

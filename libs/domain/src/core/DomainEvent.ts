@@ -8,7 +8,7 @@ export abstract class DomainEvent {
   readonly occurredOn: Date
   readonly eventName: string
 
-  constructor(eventName: string, aggregateId: string, eventId?: string, occurredOn?: Date) {
+  constructor(eventName: string, aggregateId?: string, eventId?: string, occurredOn?: Date) {
     this.aggregateId = aggregateId
     this.eventId = eventId || uuid4()
     this.occurredOn = occurredOn || new Date()

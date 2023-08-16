@@ -5,6 +5,7 @@ import { Password } from "./Password";
 import { Nickname } from "./Nickname";
 import { Email } from "./Email";
 import { Entity, ObjectId, ObjectIdColumn } from "typeorm";
+import { UserRegisteredDomainEvent } from "./events/UserRegisteredDomainEvent";
 
 @Entity()
 export class User extends AggregateRoot {
@@ -90,6 +91,8 @@ export class User extends AggregateRoot {
     user.updateTime = new Date()
     user.isAdmin = false
     user.isFrozen = false
+
+    user.addDomainEvent(new UserRegisteredDomainEvent(user))
 
     return user
   }

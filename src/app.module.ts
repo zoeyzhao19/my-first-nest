@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MediatorModule } from '@libs/mediator';
 import { IndexModule } from './modules/index.module';
 import {TypeOrmModule} from '@nestjs/typeorm'
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import {User} from './domain/users/User'
 import {Permission} from './domain/permissions/Permission'
 import {Role} from './domain/roles/Role'
@@ -13,6 +14,9 @@ import {ConfigModule, ConfigService} from '@nestjs/config'
   imports: [
     MediatorModule, 
     IndexModule,
+    EventEmitterModule.forRoot({
+      maxListeners: 100
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['src/.env', process.env.NODE_ENV === 'development' ? 'src/.env.development' : 'src/.env.production']
