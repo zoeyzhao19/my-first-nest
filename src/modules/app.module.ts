@@ -1,19 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MediatorModule } from '@libs/mediator';
-import { IndexModule } from './modules/index.module';
 import {TypeOrmModule} from '@nestjs/typeorm'
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import {User} from './domain/users/User'
-import {Permission} from './domain/permissions/Permission'
-import {Role} from './domain/roles/Role'
+import {User} from '../domain/users/User'
+import {Permission} from '../domain/permissions/Permission'
+import {Role} from '../domain/roles/Role'
 import {ConfigModule, ConfigService} from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt';
+import { UserModule } from './user.module';
+import { RedisModule } from './redis.module';
+import { EmailModule } from './email.module';
+import { RoleModule } from './role.module';
 
 @Module({
   imports: [
-    IndexModule,
+    UserModule, 
+    RedisModule, 
+    EmailModule, 
+    RoleModule,
 
     MediatorModule, 
 
@@ -51,7 +55,5 @@ import { JwtModule } from '@nestjs/jwt';
       inject: [ConfigService]
     })
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
