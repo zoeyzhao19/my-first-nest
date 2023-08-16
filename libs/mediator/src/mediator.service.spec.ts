@@ -40,7 +40,7 @@ describe('MediatorService', () => {
 
     @registerHandler(CourseCommand)
     class CourseCommandHandler
-      implements IRequestHandler<CourseCommand, CourseResponse>
+      implements IRequestHandler<CourseCommand>
     {
       handle(_command: CourseCommand): Promise<CourseResponse> {
         return spy();

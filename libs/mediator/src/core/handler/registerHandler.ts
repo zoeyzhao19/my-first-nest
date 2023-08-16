@@ -6,13 +6,13 @@ export function registerHandler<T>(command: {
   new (...args: any[]): IRequest<T>;
 }) {
   return (constructor: {
-    new (...args: any[]): IRequestHandler<IRequest<any>, any>;
+    new (...args: any[]): IRequestHandler<IRequest<any>>;
   }) => register(command, constructor);
 }
 
 function register<T>(
   command: { new (): IRequest<T> },
-  constructor: { new (): IRequestHandler<IRequest<any>, any> },
+  constructor: { new (): IRequestHandler<IRequest<any>> },
 ) {
   MediatorService.registerHandler(command.name, constructor);
 }

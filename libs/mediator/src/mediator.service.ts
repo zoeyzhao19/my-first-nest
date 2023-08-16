@@ -8,13 +8,13 @@ import { ModuleRef } from '@nestjs/core';
 export class MediatorService {
   static handlers: Map<
     string,
-    { new (): IRequestHandler<IRequest<any>, any> }
+    { new (): IRequestHandler<IRequest<any>> }
   > = new Map();
   static pipelines: Map<string, { new (): IPipeBehavior }[]> = new Map();
   static handlerResolver:
     | ((
-        handler: new () => IRequestHandler<IRequest<any>, any>,
-      ) => IRequestHandler<IRequest<any>, any>)
+        handler: new () => IRequestHandler<IRequest<any>>,
+      ) => IRequestHandler<IRequest<any>>)
     | undefined;
   static pipelineResolver:
     | ((
@@ -24,7 +24,7 @@ export class MediatorService {
 
   static registerHandler<T>(
     commandName: string,
-    handler: { new (): IRequestHandler<IRequest<T>, T> },
+    handler: { new (): IRequestHandler<IRequest<T>> },
   ) {
     this.handlers.set(commandName, handler);
   }

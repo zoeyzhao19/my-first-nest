@@ -2,7 +2,6 @@ import { RegisterCommand } from '@applications/user/commands/register/RegisterCo
 import { RegisterRequest } from '@applications/user/commands/register/RegisterRequest';
 import { MediatorService } from '@libs/mediator';
 import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
-import { UserService } from '@services/user.service';
 
 @Controller('user')
 export class UserController {
