@@ -9,6 +9,7 @@ import { SendCaptchaCommandHandler } from '@applications/user/commands/sendCaptc
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [UserController],
-  providers: [UserService, RegisterCommandHandler, SendCaptchaCommandHandler]
+  providers: [UserService, RegisterCommandHandler, SendCaptchaCommandHandler],
+  exports: [UserService]
 })
 export class UserModule {}

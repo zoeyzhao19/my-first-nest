@@ -23,4 +23,23 @@ export abstract class AggregateRoot {
     this.#domainEvents = []
     return events
   }
+
+  getDomainEvents(eventName?: string): Array<DomainEvent> {
+    if(eventName) {
+      let events = []
+      this.#domainEvents = this.#domainEvents.map(event => {
+        if(event.eventName === eventName) {
+          events.push(event)
+          return null
+        } else {
+          return event
+        }
+      }).filter(Boolean)
+      return events
+    } else {
+      const events = this.#domainEvents.slice()
+      this.#domainEvents = []
+      return events
+    }
+  }
 }

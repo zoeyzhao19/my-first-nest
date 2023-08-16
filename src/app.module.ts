@@ -12,8 +12,9 @@ import {ConfigModule, ConfigService} from '@nestjs/config'
 
 @Module({
   imports: [
-    MediatorModule, 
     IndexModule,
+
+    MediatorModule, 
     EventEmitterModule.forRoot({
       maxListeners: 100
     }),

@@ -9,6 +9,7 @@ import { Email } from '../domain/users/Email';
 import { UserError } from '@errors/UserError';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { UserRegisteredDomainEvent } from 'src/domain/users/events/UserRegisteredDomainEvent';
+import { Role } from 'src/domain/roles/Role';
 
 @Injectable()
 export class UserService {
@@ -48,6 +49,23 @@ export class UserService {
     const user = User.create(usernameVo, passwordVo, nicknameVo, emailVo)
     await this.userRepository.save(user)
     
-    this.eventEmitter.emit(UserRegisteredDomainEvent.EVENT_NAME, user.pullDomainEvents())
+    this.eventEmitter.emit(UserRegisteredDomainEvent.EVENT_NAME, user.getDomainEvents(UserRegisteredDomainEvent.EVENT_NAME))
+  }
+
+  async updateRoles(user: User, roles: Role[]) {
+    const existed = await this.userRepository.findOne({
+      where: {
+        username: {
+          value: user.username.value
+        } 
+      }
+    })
+
+    if(!existed) {
+      throw new UserError(UserError.UserNoExist)
+    }
+
+    user.setRoles(roles)
+    await this.userRepository.save(user)
   }
 }

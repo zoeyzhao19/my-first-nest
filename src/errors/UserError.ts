@@ -8,6 +8,7 @@ export class UserError extends AppError {
   static UsernameOrEmailExisted = '用户名 {username} 或邮箱 {email} 已存在'
   static CaptchaExpired = '验证码已失效'
   static CaptchaIncorrect = '验证码不正确'
+  static UserNoExist = '用户不存在'
 
   constructor(message: string, ...replacers: string[]) {
     super(message, ...replacers)

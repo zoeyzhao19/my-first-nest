@@ -4,7 +4,7 @@ import { Username } from "./Username";
 import { Password } from "./Password";
 import { Nickname } from "./Nickname";
 import { Email } from "./Email";
-import { Entity, ObjectId, ObjectIdColumn } from "typeorm";
+import { Column, Entity, ObjectId, ObjectIdColumn } from "typeorm";
 import { UserRegisteredDomainEvent } from "./events/UserRegisteredDomainEvent";
 
 @Entity({
@@ -17,56 +17,67 @@ export class User extends AggregateRoot {
   /**
    * 用户名
    */
+  @Column()
   public username: Username;
 
   /**
    * 密码
    */
+  @Column()
   public password: Password;
 
   /**
    * 昵称
    */
+  @Column()
   public nickname: Nickname;
 
   /**
    * 邮箱
    */
+  @Column()
   public email: Email;
 
   /**
    * 头像
    */
+  @Column()
   public headPic: string;
 
   /**
    * 手机号
    */
+  @Column()
   public phoneNumber: string;
 
   /**
    * 是否冻结
    */
+  @Column()
   public isFrozen: boolean;
 
   /**
    * 是否是管理员
    */
+  @Column()
   public isAdmin: boolean;
 
   /**
    * 创建时间
    */
+  @Column()
   public createTime: Date;
 
   /**
    * 更新时间
    */
+  @Column()
   public updateTime: Date
 
   /**
    * 所属角色
    */
+  @Column()
   roles: Role[]
 
   constructor(

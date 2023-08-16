@@ -16,10 +16,10 @@ export class SendCaptchaCommandHandler implements IRequestHandler<SendCaptchaCom
   async handle(command: SendCaptchaCommand) {
     const code = Math.random().toString().slice(2,8);
     await this.redisService.set(`captcha_${command.email}`, code, 5 * 60);
-    await this.emailService.send({
-      to: command.email,
-      subject: '注册验证码',
-      html: `<p>你的注册验证码是 ${code}</p>`
-    });
+    // await this.emailService.send({
+    //   to: command.email,
+    //   subject: '注册验证码',
+    //   html: `<p>你的注册验证码是 ${code}</p>`
+    // });
   }
 }
