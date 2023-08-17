@@ -12,9 +12,10 @@ import { RequireLogin, UserInfo } from '../decorators/requre-login.decorator';
 import { UpdatePassRequest } from '@applications/user/commands/updatePassword/UpdatePasswordRequest';
 import { UpdatePasswordCommand } from '@applications/user/commands/updatePassword/UpdatePasswordCommand';
 import { Request } from 'express';
-import { userInfo } from 'os';
+import {ApiTags, ApiBearerAuth} from '@nestjs/swagger'
 
 @Controller('user')
+@ApiTags('user module')
 export class UserController {
 
   @Inject(MediatorService)
@@ -55,6 +56,7 @@ export class UserController {
   }
 
   @RequireLogin()
+  @ApiBearerAuth()
   @Post('password/update')
   async updatePassword(@UserInfo() userInfo: Request['user'], @Body() body: UpdatePassRequest) {
     const command = new UpdatePasswordCommand({
@@ -72,10 +74,6 @@ export class UserController {
     const command = new SendCaptchaCommand(body.email, 'update_password')
     await this._mediator.send(command)
   }
-
-  // swagger
-
-  // logger
 
   // transaction
 

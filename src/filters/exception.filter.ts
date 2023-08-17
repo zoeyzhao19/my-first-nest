@@ -1,5 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, Logger } from "@nestjs/common";
-import e, { Response } from "express";
+import { Response } from "express";
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -10,7 +10,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>()
 
     this.logger.error(exception.message, exception.stack)
-    return response.json({
+    return response.status(exception.getStatus()).json({
       code: exception.getStatus(),
       message: exception.message
     }).end()
