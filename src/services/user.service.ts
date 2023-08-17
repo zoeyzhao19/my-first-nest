@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm'
 import { User } from '../domain/users/User';
 import { MongoRepository} from 'typeorm'
+import {ObjectId} from 'mongodb'
 import { Username } from '../domain/users/Username';
 import { Nickname } from '../domain/users/Nickname';
 import { Password } from '../domain/users/Password';
@@ -89,5 +90,31 @@ export class UserService {
     }
 
     return user
+  }
+
+  async updatePassword(userId: string, oldPassword: string, newPassword: string) {
+    const user = await this.userRepository.findOne({
+      where: {
+        _id: new ObjectId(userId)
+      }
+    })
+
+    if(!user) {
+      throw new UserError(UserError.UserNoExist)
+    }
+
+    const oldPasswordVo = Password.create(oldPassword)
+
+    // https://github.com/typeorm/typeorm/issues/4268
+    // user.password.equal(oldPasswordVo)
+    if(!oldPasswordVo.equal(user.password)) {
+      throw new UserError(UserError.OldPasswordError)
+    }
+
+    user.updatePassword(newPassword);
+
+    user.password = Password.create(newPassword)
+
+    await this.userRepository.save(user)
   }
 }

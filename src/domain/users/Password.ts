@@ -4,7 +4,8 @@ import crypto from 'crypto'
 
 export class Password extends ValueObject<string> {
   constructor(value: string) {
-    super(value)
+    Password.ensureLengthIsLessThan20Characters(value)
+    super(Password.encrypt(value))
   }
 
   static encrypt(value: string) {
@@ -19,7 +20,6 @@ export class Password extends ValueObject<string> {
   }
 
   static create(value: string) {
-    this.ensureLengthIsLessThan20Characters(value)
-    return new Password(this.encrypt(value))
+    return new Password(value)
   }
 }

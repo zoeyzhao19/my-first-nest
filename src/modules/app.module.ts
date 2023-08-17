@@ -11,6 +11,8 @@ import { UserModule } from './user.module';
 import { RedisModule } from './redis.module';
 import { EmailModule } from './email.module';
 import { RoleModule } from './role.module';
+import { APP_GUARD } from '@nestjs/core';
+import { LoginGuard } from '../guards/login.guard';
 
 @Module({
   imports: [
@@ -53,7 +55,13 @@ import { RoleModule } from './role.module';
         }
       },
       inject: [ConfigService]
-    })
+    }),
   ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: LoginGuard
+    }
+  ]
 })
 export class AppModule {}

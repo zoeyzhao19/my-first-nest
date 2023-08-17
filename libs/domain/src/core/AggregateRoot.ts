@@ -9,7 +9,7 @@ export abstract class AggregateRoot {
     this.#domainEvents = []
   }
 
-  abstract toPrimitives(): any
+  // abstract toPrimitives(): any
 
   addDomainEvent(event: DomainEvent) {
     this.#domainEvents.push(event)

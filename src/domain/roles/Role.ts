@@ -38,12 +38,12 @@ export class Role extends AggregateRoot {
   //   return role
   // }
 
-  toPrimitives() {
-    return {
-      id: this.id.toString(),
-      name: this.name,
-      permissions: this.permissions.map(permission => permission.toPrimitives()),
-    }
-  }
+  // toPrimitives() {
+  //   return {
+  //     id: this.id.toString(),
+  //     name: this.name,
+  //     permissions: this.permissions.map(permission => permission.toPrimitives()),
+  //   }
+  // }
   
 }

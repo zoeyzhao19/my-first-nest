@@ -8,6 +8,11 @@ import { SendCaptchaCommand } from '@applications/user/commands/sendCaptcha/Send
 import { SendCaptchaRequest } from '@applications/user/commands/sendCaptcha/SendCaptchaRequest';
 import { MediatorService } from '@libs/mediator';
 import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
+import { RequireLogin, UserInfo } from '../decorators/requre-login.decorator';
+import { UpdatePassRequest } from '@applications/user/commands/updatePassword/UpdatePasswordRequest';
+import { UpdatePasswordCommand } from '@applications/user/commands/updatePassword/UpdatePasswordCommand';
+import { Request } from 'express';
+import { userInfo } from 'os';
 
 @Controller('user')
 export class UserController {
@@ -15,9 +20,9 @@ export class UserController {
   @Inject(MediatorService)
   private _mediator: MediatorService
 
-  @Post('captcha/send')
-  async captcha(@Body() body: SendCaptchaRequest) {
-    const command = new SendCaptchaCommand(body.email)
+  @Post('captcha/register')
+  async registerCaptcha(@Body() body: SendCaptchaRequest) {
+    const command = new SendCaptchaCommand(body.email, 'register')
     await this._mediator.send(command)
   }
 
@@ -47,5 +52,32 @@ export class UserController {
 
     return result
   }
+
+  @RequireLogin()
+  @Post('password/update')
+  async updatePassword(@UserInfo() userInfo: Request['user'], @Body() body: UpdatePassRequest) {
+    const command = new UpdatePasswordCommand({
+      id: userInfo.id,
+      email: userInfo.email,
+      old_password: body.old_password,
+      new_password: body.new_password,
+      captcha: +body.captcha
+    })
+    await this._mediator.send(command)
+  }
+
+  @Post('captcha/update_password')
+  async updatePasswordCaptcha(@Body() body: SendCaptchaRequest) {
+    const command = new SendCaptchaCommand(body.email, 'update_password')
+    await this._mediator.send(command)
+  }
+
+  // swagger
+
+  // logger
+
+  // response format
+
+  // transaction
 
 }

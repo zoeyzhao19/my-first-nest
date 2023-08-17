@@ -7,11 +7,19 @@ import { RegisterCommandHandler } from '@applications/user/commands/register/Reg
 import { SendCaptchaCommandHandler } from '@applications/user/commands/sendCaptcha/SendCaptchaCommandHandler';
 import { LoginCommandHandler } from '@applications/user/commands/login/LoginCommandHandler';
 import { RefreshTokenCommandHandler } from '@applications/user/commands/refreshToken/RefreshTokenCommandHandler';
+import { UpdatePasswordCommandHandler } from '@applications/user/commands/updatePassword/UpdatePasswordCommandHandler';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [UserController],
-  providers: [UserService, RegisterCommandHandler, SendCaptchaCommandHandler, LoginCommandHandler, RefreshTokenCommandHandler],
+  providers: [
+    UserService, 
+    RegisterCommandHandler, 
+    SendCaptchaCommandHandler, 
+    LoginCommandHandler, 
+    RefreshTokenCommandHandler,
+    UpdatePasswordCommandHandler
+  ],
   exports: [UserService]
 })
 export class UserModule {}

@@ -3,6 +3,7 @@ import { ValueObject } from "@libs/domain/core/ValueObject"
 
 export class Nickname extends ValueObject<string> {
   constructor(value: string) {
+    Nickname.ensureLengthIsLessThan50Characters(value)
     super(value)
   }
 
@@ -12,7 +13,6 @@ export class Nickname extends ValueObject<string> {
   }
 
   static create(value: string) {
-    this.ensureLengthIsLessThan50Characters(value)
     return new Nickname(value)
   }
 }

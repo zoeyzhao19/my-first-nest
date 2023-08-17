@@ -3,6 +3,7 @@ import { ValueObject } from "@libs/domain/core/ValueObject";
 
 export class Email extends ValueObject<string> {
   constructor(value: string) {
+    Email.ensureEmailValid(value)
     super(value)
   }
 
@@ -14,7 +15,6 @@ export class Email extends ValueObject<string> {
   }
 
   static create(value: string) {
-    this.ensureEmailValid(value)
     return new Email(value)
   }
 }

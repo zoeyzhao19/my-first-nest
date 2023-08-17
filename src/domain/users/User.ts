@@ -115,7 +115,14 @@ export class User extends AggregateRoot {
     this.updateTime = new Date()
   }
 
-  toPrimitives() {
-    
+  updatePassword(newPassword: string) {
+    const newPasswordVo = Password.create(newPassword)
+
+    this.password = newPasswordVo
+    this.updateTime = new Date()
   }
+
+  // toPrimitives() {
+    
+  // }
 }
