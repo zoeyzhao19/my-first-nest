@@ -17,15 +17,15 @@ export class UpdatePasswordCommandHandler implements IRequestHandler<UpdatePassw
   private redisService: RedisService
 
   async handle(command: UpdatePasswordCommand) {
-    // const captcha = await this.redisService.get(`captcha_update_password_${command.email}`)
+    const captcha = await this.redisService.get(`captcha_update_password_${command.email}`)
 
-    // if(!captcha) {
-    //   throw new UserError(UserError.CaptchaExpired)
-    // } 
+    if(!captcha) {
+      throw new UserError(UserError.CaptchaExpired)
+    } 
 
-    // if(+captcha !== command.captcha) {
-    //   throw new UserError(UserError.CaptchaIncorrect)
-    // }
+    if(+captcha !== command.captcha) {
+      throw new UserError(UserError.CaptchaIncorrect)
+    }
 
     await this.userService.updatePassword(command.id, command.old_password, command.new_password)
   }

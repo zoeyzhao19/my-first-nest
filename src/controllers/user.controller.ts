@@ -7,7 +7,7 @@ import { RegisterRequest } from '@applications/user/commands/register/RegisterRe
 import { SendCaptchaCommand } from '@applications/user/commands/sendCaptcha/SendCaptchaCommand';
 import { SendCaptchaRequest } from '@applications/user/commands/sendCaptcha/SendCaptchaRequest';
 import { MediatorService } from '@libs/mediator';
-import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Inject, Post, Query } from '@nestjs/common';
 import { RequireLogin, UserInfo } from '../decorators/requre-login.decorator';
 import { UpdatePassRequest } from '@applications/user/commands/updatePassword/UpdatePasswordRequest';
 import { UpdatePasswordCommand } from '@applications/user/commands/updatePassword/UpdatePasswordCommand';
@@ -45,6 +45,7 @@ export class UserController {
   }
 
   @Post('token/refresh')
+  @HttpCode(200)
   async refreshToken(@Body() body: RefreshTokenRequest) {
     const command = new RefreshTokenCommand(body.refresh_token)
 
@@ -75,8 +76,6 @@ export class UserController {
   // swagger
 
   // logger
-
-  // response format
 
   // transaction
 

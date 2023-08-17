@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Logger } from '@nestjs/common';
 import { MediatorModule } from '@libs/mediator';
 import {TypeOrmModule} from '@nestjs/typeorm'
 import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -55,13 +55,13 @@ import { LoginGuard } from '../guards/login.guard';
         }
       },
       inject: [ConfigService]
-    }),
+    })
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: LoginGuard
-    }
+    },
   ]
 })
 export class AppModule {}
