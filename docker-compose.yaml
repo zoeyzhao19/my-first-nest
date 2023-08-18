@@ -1,19 +1,91 @@
 version: "3.8"
 
 services:
-  mongo:
-    image: mongo:latest
+  mongo1:
+    image: mongo:7
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
     volumes:
-      - /data/mongo:/data/db
+      - /data/mongo1:/data/db
+      - ./mongo.key:/data/mongo.key.temp
     ports:
       - 27017:27017
-    
+    command: ["mongod", "--replSet", "rs0", "--port", "27017", "--keyFile", "/data/mongo.key"]
+    restart: always
+    entrypoint:
+            - bash
+            - -c
+            - |
+                cp /data/mongo.key.temp /data/mongo.key
+                chmod 400 /data/mongo.key
+                chown 999:999 /data/mongo.key
+                exec docker-entrypoint.sh $$@
+    networks:
+      - mongos-network
+
+  mongo2:
+    image: mongo:7
+    volumes:
+      - /data/mongo2:/data/db
+      - ./mongo.key:/data/mongo.key.temp
+    ports:
+      - 27018:27017
+    command: ["mongod", "--replSet", "rs0", "--port", "27017", "--keyFile", "/data/mongo.key"]
+    restart: always
+    entrypoint:
+            - bash
+            - -c
+            - |
+                cp /data/mongo.key.temp /data/mongo.key
+                chmod 400 /data/mongo.key
+                chown 999:999 /data/mongo.key
+                exec docker-entrypoint.sh $$@
+    networks:
+      - mongos-network
+
+  mongo3:
+    image: mongo:7
+    volumes:
+      - /data/mongo3:/data/db
+      - ./mongo.key:/data/mongo.key.temp
+    ports:
+      - 27019:27017
+    command: ["mongod", "--replSet", "rs0", "--port", "27017", "--keyFile", "/data/mongo.key"]
+    restart: always
+    entrypoint:
+            - bash
+            - -c
+            - |
+                cp /data/mongo.key.temp /data/mongo.key
+                chmod 400 /data/mongo.key
+                chown 999:999 /data/mongo.key
+                exec docker-entrypoint.sh $$@     
+    networks:
+      - mongos-network
+
+  mongosetup:
+    image: mongo:7
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - ./scripts/mongo_rs_init.sh:/scripts/mongo_rs_init.sh
+    entrypoint: [ "/scripts/mongo_rs_init.sh" ] 
+    networks:
+      - mongos-network
+
   redis:
     image: redis:6.2.13-alpine3.18
     ports:
       - 6379:6379
     volumes:
       - /data/redis:/data
+  
+networks:
+    mongos-network:
+      driver: bridge
