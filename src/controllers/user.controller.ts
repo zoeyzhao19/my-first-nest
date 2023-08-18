@@ -22,12 +22,14 @@ export class UserController {
   private _mediator: MediatorService
 
   @Post('captcha/register')
+  @HttpCode(200)
   async registerCaptcha(@Body() body: SendCaptchaRequest) {
     const command = new SendCaptchaCommand(body.email, 'register')
     await this._mediator.send(command)
   }
 
   @Post('register')
+  @HttpCode(200)
   async register(@Body() body: RegisterRequest) {
     const command = new RegisterCommand({
       ...body,
@@ -37,6 +39,7 @@ export class UserController {
   }
 
   @Post('login')
+  @HttpCode(200)
   async userLogin(@Body() body: LoginRequest) {
     const command = new LoginCommand(body.username, body.password)
 
@@ -58,6 +61,7 @@ export class UserController {
   @RequireLogin()
   @ApiBearerAuth()
   @Post('password/update')
+  @HttpCode(200)
   async updatePassword(@UserInfo() userInfo: Request['user'], @Body() body: UpdatePassRequest) {
     const command = new UpdatePasswordCommand({
       id: userInfo.id,
@@ -70,6 +74,7 @@ export class UserController {
   }
 
   @Post('captcha/update_password')
+  @HttpCode(200)
   async updatePasswordCaptcha(@Body() body: SendCaptchaRequest) {
     const command = new SendCaptchaCommand(body.email, 'update_password')
     await this._mediator.send(command)
