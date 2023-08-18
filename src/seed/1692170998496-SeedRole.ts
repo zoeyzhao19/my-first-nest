@@ -1,6 +1,5 @@
 import { MongoQueryRunner } from "typeorm/driver/mongodb/MongoQueryRunner"
 import { MigrationInterface, QueryRunner } from "typeorm"
-import { Role } from "../domain/roles/Role"
 
 export class SeedRole1692170998496 implements MigrationInterface {
 
