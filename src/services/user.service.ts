@@ -1,9 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {InjectEntityManager, InjectRepository} from '@nestjs/typeorm'
+import { InjectRepository} from '@nestjs/typeorm'
 import { User } from '../domain/users/User';
-import { MongoEntityManager, MongoRepository} from 'typeorm'
+import { MongoRepository} from 'typeorm'
 import { ObjectId} from 'mongodb'
-import {ClientSession} from 'typeorm'
 import { Username } from '../domain/users/Username';
 import { Nickname } from '../domain/users/Nickname';
 import { Password } from '../domain/users/Password';

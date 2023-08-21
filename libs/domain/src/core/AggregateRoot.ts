@@ -1,7 +1,5 @@
 import type { DomainEvent } from './DomainEvent'
-// import { Entity } from './Entity'
 
-// export abstract class AggregateRoot extends Entity
 export abstract class AggregateRoot {
    #domainEvents: Array<DomainEvent>
 
