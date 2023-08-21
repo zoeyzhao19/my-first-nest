@@ -44,6 +44,8 @@ A NestJS project for personal practice, mainly refer to  [meeting room](https://
       xxxRepository.updateOne({
         _id: new ObjectId(xxxId)
     }, {$set: xxxEntity}, {session})
+
+    await session.commitTransaction();
     } catch (err) {
       await session.abortTransaction();
       throw err
