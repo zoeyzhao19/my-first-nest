@@ -1,4 +1,4 @@
-import { v4 as uuid4 } from 'uuid'
+import { AggregateRoot } from './AggregateRoot'
 
 export abstract class DomainEvent {
   static EVENT_NAME: string
@@ -8,15 +8,13 @@ export abstract class DomainEvent {
   readonly occurredOn: Date
   readonly eventName: string
 
-  constructor(eventName: string, aggregateId?: string, eventId?: string, occurredOn?: Date) {
+  constructor(aggregateId: string) {
     this.aggregateId = aggregateId
-    this.eventId = eventId || uuid4()
-    this.occurredOn = occurredOn || new Date()
-    this.eventName = eventName
+    this.occurredOn = new Date()
+    this.eventName = this.constructor.name
   }
 }
 
-// type DomainEventAttributes = any
 
 export interface DomainEventClass {
   EVENT_NAME: string
