@@ -1,5 +1,5 @@
 ## Description
-A NestJS project mainly refer to  [meeting room](https://github.com/QuarkGluonPlasma/nestjs-course-code/tree/main/meeting_room_booking_system_backend?mode=light)
+A NestJS project for personal practice, mainly refer to  [meeting room](https://github.com/QuarkGluonPlasma/nestjs-course-code/tree/main/meeting_room_booking_system_backend?mode=light)
 ## New Feature
 - [CQRS support](/libs//mediator/src/mediator.service.ts)
 - DDD design practice
@@ -7,7 +7,7 @@ A NestJS project mainly refer to  [meeting room](https://github.com/QuarkGluonPl
 
 ## Usage
 - use docker to run mongo and redis containers
-- update your system host file for mongo replica sets mapping
+- update system host file for mongo replica sets mapping
 
   ```
   127.0.0.1 mongo1
@@ -21,16 +21,16 @@ A NestJS project mainly refer to  [meeting room](https://github.com/QuarkGluonPl
   pnpm install
   pnpm seed:dev
   ```
-- update **nodemailer_auth_email** and **nodemailer_auth_code** in `env.development` if you want to use email service
+- update **nodemailer_auth_email** and **nodemailer_auth_code** in `env.development` to use email service
 - run the app
 
   ```bash
   pnpm start:dev
   ```
 ### Notes
-  If you want to use mongo transaction, here is an example.
+  Example to use `mongo transaction`.
 
-  For my test, **Repository.save()** does not work with transaction. 
+  For test showed, **Repository.save()** does not work with transaction. 
    
   ```js
   @InjectEntityManager()
