@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {InjectRepository} from '@nestjs/typeorm'
+import {InjectEntityManager, InjectRepository} from '@nestjs/typeorm'
 import { User } from '../domain/users/User';
-import { MongoRepository} from 'typeorm'
-import {ObjectId} from 'mongodb'
+import { MongoEntityManager, MongoRepository} from 'typeorm'
+import { ObjectId} from 'mongodb'
+import {ClientSession} from 'typeorm'
 import { Username } from '../domain/users/Username';
 import { Nickname } from '../domain/users/Nickname';
 import { Password } from '../domain/users/Password';
@@ -54,11 +55,10 @@ export class UserService {
   }
 
   async updateRoles(user: User, roles: Role[]) {
+    const id = new ObjectId(user.id)
     const existed = await this.userRepository.findOne({
       where: {
-        username: {
-          value: user.username.value
-        } 
+        _id: id
       }
     })
 
@@ -96,7 +96,7 @@ export class UserService {
     const user = await this.userRepository.findOne({
       where: {
         _id: new ObjectId(userId)
-      }
+      },
     })
 
     if(!user) {
@@ -112,8 +112,6 @@ export class UserService {
     }
 
     user.updatePassword(newPassword);
-
-    user.password = Password.create(newPassword)
 
     await this.userRepository.save(user)
   }
