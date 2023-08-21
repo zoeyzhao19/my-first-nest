@@ -7,11 +7,14 @@ import { PipelineHandler } from './core/pipeline/PipelineHandler';
 import { IPipelineHandler } from './core/pipeline/IPipelineHandler';
 import { Injectable } from '@nestjs/common';
 
-const spy = jest.fn(async () => {
+const command_spy = jest.fn(async () => {
   return {
     id: 1,
   };
 });
+
+const validation_spy_1 = jest.fn()
+const validation_spy_2 = jest.fn()
 
 interface CourseResponse {
   id: number;
@@ -33,7 +36,7 @@ class CourseCommandHandler
   implements IRequestHandler<CourseCommand>
 {
   handle(_command: CourseCommand): Promise<CourseResponse> {
-    return spy();
+    return command_spy();
   }
 }
 
@@ -41,8 +44,15 @@ class CourseCommandHandler
 @Injectable()
 class ValidationPipeline implements IPipelineHandler<CourseCommand> {
   handle(command: CourseCommand) {
-    if (command.name.length > 6)
-      throw new Error('name is too long')
+    validation_spy_1()
+  }
+}
+
+@PipelineHandler(CourseCommand)
+@Injectable()
+class ValidationPipeline2 implements IPipelineHandler<CourseCommand> {
+  handle(command: CourseCommand) {
+    validation_spy_2()
   }
 }
 
@@ -51,7 +61,7 @@ describe('MediatorService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [MediatorService, CourseCommandHandler, ValidationPipeline],
+      providers: [MediatorService, CourseCommandHandler, ValidationPipeline, ValidationPipeline2],
     }).compile();
 
     service = module.get<MediatorService>(MediatorService);
@@ -64,12 +74,14 @@ describe('MediatorService', () => {
     );
 
     expect(MediatorService.pipelines.size).toBe(1)
-    expect(MediatorService.pipelines.get(CourseCommand.name)).toHaveLength(1)
-    expect(MediatorService.pipelines.get(CourseCommand.name)).toEqual([ValidationPipeline])
+    expect(MediatorService.pipelines.get(CourseCommand.name)).toHaveLength(2)
+    expect(MediatorService.pipelines.get(CourseCommand.name)).toEqual([ValidationPipeline, ValidationPipeline2])
 
-    await expect(service.send(new CourseCommand())).rejects.toThrowError('name is too long')
-
-    expect(spy).toHaveBeenCalledTimes(0);
+    await service.send(new CourseCommand())
+    
+    expect(validation_spy_1).toHaveBeenCalledTimes(1)
+    expect(validation_spy_2).toHaveBeenCalledTimes(1)
+    expect(command_spy).toHaveBeenCalledTimes(1);
   });
 
 });
