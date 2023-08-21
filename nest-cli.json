@@ -28,6 +28,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/domain/tsconfig.lib.json"
       }
+    },
+    "eventbus": {
+      "type": "library",
+      "root": "libs/eventbus",
+      "entryFile": "index",
+      "sourceRoot": "libs/eventbus/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/eventbus/tsconfig.lib.json"
+      }
     }
   }
 }

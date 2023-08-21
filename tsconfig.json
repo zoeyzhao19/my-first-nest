@@ -39,11 +39,18 @@
       ],
       "@libs/domain/*": [
         "libs/domain/src/*"
+      ],
+      "@libs/eventbus": [
+        "libs/eventbus/src"
+      ],
+      "@libs/eventbus/*": [
+        "libs/eventbus/src/*"
       ]
     }
   },
   "ts-node": {
-    // Do not forget to `npm i -D tsconfig-paths`
-    "require": ["tsconfig-paths/register"]
+    "require": [
+      "tsconfig-paths/register"
+    ]
   }
 }

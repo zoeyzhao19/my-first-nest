@@ -1,7 +1,7 @@
-import { Module, Logger } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MediatorModule } from '@libs/mediator';
+import {EventbusModule} from '@libs/eventbus'
 import {TypeOrmModule} from '@nestjs/typeorm'
-import { EventEmitterModule } from '@nestjs/event-emitter';
 import {User} from '../domain/users/User'
 import {Permission} from '../domain/permissions/Permission'
 import {Role} from '../domain/roles/Role'
@@ -23,9 +23,8 @@ import { LoginGuard } from '../guards/login.guard';
 
     MediatorModule, 
 
-    EventEmitterModule.forRoot({
-      maxListeners: 100
-    }),
+    EventbusModule,
+
 
     JwtModule.registerAsync({
       global: true,

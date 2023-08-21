@@ -32,7 +32,8 @@
     ],
     "moduleNameMapper": {
       "^@libs/mediator(|/.*)$": "<rootDir>/libs/mediator/src/$1",
-      "^@libs/domain(|/.*)$": "<rootDir>/libs/domain/src/$1"
+      "^@libs/domain(|/.*)$": "<rootDir>/libs/domain/src/$1",
+      "^@libs/eventbus(|/.*)$": "<rootDir>/libs/eventbus/src/$1"
     },
     "rootDir": ".",
     "roots": [
@@ -49,7 +50,6 @@
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^10.0.0",
-    "@nestjs/event-emitter": "^2.0.1",
     "@nestjs/jwt": "^10.1.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.8",

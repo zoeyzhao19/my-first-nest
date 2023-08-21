@@ -1,11 +1,12 @@
+import { EventHandler, IDomainEventHandler } from "@libs/eventbus";
 import { Inject, Injectable } from "@nestjs/common";
-import { OnEvent } from "@nestjs/event-emitter";
 import { RoleService } from "@services/role.service";
 import { UserService } from "@services/user.service";
 import { UserRegisteredDomainEvent } from "src/domain/users/events/UserRegisteredDomainEvent";
 
 @Injectable()
-export class OnUserRegistered {
+@EventHandler(UserRegisteredDomainEvent)
+export class OnUserRegistered implements IDomainEventHandler {
 
   @Inject(RoleService)
   private roleService: RoleService
@@ -13,12 +14,9 @@ export class OnUserRegistered {
   @Inject(UserService)
   private userService: UserService
 
-  @OnEvent(UserRegisteredDomainEvent.EVENT_NAME)
-  async on(events: UserRegisteredDomainEvent[]) {
-    for(const event of events) {
-      const user = event.user
-      const role = await this.roleService.findRole(user.isAdmin ? '管理员' : '普通用户')
-      await this.userService.updateRoles(user, [role])
-    }
+  async on(event: UserRegisteredDomainEvent) {
+    const user = event.user
+    const role = await this.roleService.findRole(user.isAdmin ? '管理员' : '普通用户')
+    await this.userService.updateRoles(user, [role])
   }
 }

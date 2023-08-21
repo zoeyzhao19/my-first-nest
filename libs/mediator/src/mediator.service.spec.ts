@@ -67,7 +67,7 @@ describe('MediatorService', () => {
     service = module.get<MediatorService>(MediatorService);
   });
 
-  test('should emit proper handler', async () => {
+  test('should execute proper handler and pipeline', async () => {
     expect(MediatorService.commandHandlers.size).toBe(1);
     expect(MediatorService.commandHandlers.get(CourseCommand.name)).toBe(
       CourseCommandHandler,

@@ -15,15 +15,15 @@ export class RegisterCommandHandler implements IRequestHandler<RegisterCommand> 
   private redisService: RedisService
 
   async handle(command: RegisterCommand) {
-    const captcha = await this.redisService.get(`captcha_register_${command.email}`)
+    // const captcha = await this.redisService.get(`captcha_register_${command.email}`)
 
-    if(!captcha) {
-      throw new UserError(UserError.CaptchaExpired)
-    }
+    // if(!captcha) {
+    //   throw new UserError(UserError.CaptchaExpired)
+    // }
 
-    if(+captcha !== command.captcha) {
-      throw new UserError(UserError.CaptchaIncorrect)
-    }
+    // if(+captcha !== command.captcha) {
+    //   throw new UserError(UserError.CaptchaIncorrect)
+    // }
 
     await this.userService.register({
       email: command.email,
