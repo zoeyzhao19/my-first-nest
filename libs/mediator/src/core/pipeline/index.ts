@@ -1,2 +1,2 @@
-export * from './IPipelineBehavior'
-export * from './registerPipeline'
+export * from './IPipelineHandler'
+export * from './PipelineHandler'

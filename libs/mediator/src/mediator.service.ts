@@ -1,37 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import type { IRequest } from './core/IRequest';
 import type { IRequestHandler } from './core/handler/IRequestHandler';
-import type { IPipeBehavior } from './core/pipeline/IPipelineBehavior';
+import type { IPipelineHandler } from './core/pipeline/IPipelineHandler';
 import { ModuleRef } from '@nestjs/core';
 
 @Injectable()
 export class MediatorService {
-  static handlers: Map<
+  static commandHandlers: Map<
     string,
     { new (): IRequestHandler<IRequest<any>> }
   > = new Map();
-  static pipelines: Map<string, { new (): IPipeBehavior }[]> = new Map();
-  static handlerResolver:
-    | ((
-        handler: new () => IRequestHandler<IRequest<any>>,
-      ) => IRequestHandler<IRequest<any>>)
-    | undefined;
-  static pipelineResolver:
-    | ((
-        pipeline: new () => IPipeBehavior<IRequest<any>>,
-      ) => IPipeBehavior<IRequest<any>>)
-    | undefined;
+  static pipelines: Map<string, { new (): IPipelineHandler }[]> = new Map();
 
-  static registerHandler<T>(
+  static registerCommandHandler<T>(
     commandName: string,
     handler: { new (): IRequestHandler<IRequest<T>> },
   ) {
-    this.handlers.set(commandName, handler);
+    this.commandHandlers.set(commandName, handler);
   }
 
-  static registerPipeline(
+  static registerPipelineHandler(
     commandName: string,
-    handler: { new (): IPipeBehavior },
+    handler: { new (): IPipelineHandler },
   ) {
     let pipelineHandlers = this.pipelines.get(commandName);
     if (!pipelineHandlers)
@@ -45,17 +35,17 @@ export class MediatorService {
   async send<T extends IRequest>(
     command: T,
   ): Promise<T extends IRequest<infer R> ? R : never> {
-    const Handler = MediatorService.handlers.get(command.constructor.name);
+    const Handler = MediatorService.commandHandlers.get(command.constructor.name);
     let handler: IRequestHandler<T>;
     if (!Handler)
       throw new Error(
-        `Handler for ${command.constructor.name} is not registered in Mediator}`,
+        `Handler for ${command.constructor.name} is not registered in Mediator`,
       );
 
     handler = this.moduleRef.get(Handler, {strict: false})
     if (!handler)
       throw new Error(
-        `Handler for ${command.constructor.name} is registered but cannot resolved by handlerResolver`,
+        `Handler for ${command.constructor.name} is registered but cannot resolved by Nest`,
       );
 
     let currentPipelineIndex = 0;
@@ -63,17 +53,18 @@ export class MediatorService {
       MediatorService.pipelines.get(command.constructor.name) || [];
     const next = () => {
       if (currentPipelineIndex === pipelineHandlers.length) return;
-      let pipelineHandler: IPipeBehavior<T>;
+      let pipelineHandler: IPipelineHandler<T>;
       pipelineHandler = this.moduleRef.get(
         pipelineHandlers[currentPipelineIndex], {strict: false}
       );
-      if (!pipelineHandler )
+      if (!pipelineHandler)
         throw new Error(
-          `Pipelines for ${command.constructor.name} are registered but cannot resolved by pipelineResolver`,
+          `Pipelines for ${command.constructor.name} are registered but cannot resolved by Nest`,
         );
 
       currentPipelineIndex++;
-      pipelineHandler.handle(command, next);
+      pipelineHandler.handle(command);
+      next()
     };
     next();
 

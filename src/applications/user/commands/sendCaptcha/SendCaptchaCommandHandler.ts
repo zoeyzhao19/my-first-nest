@@ -1,10 +1,10 @@
-import { IRequestHandler, registerHandler } from "@libs/mediator";
+import { IRequestHandler, CommandHandler } from "@libs/mediator";
 import { SendCaptchaCommand } from "./SendCaptchaCommand";
 import { Inject, Injectable } from "@nestjs/common";
 import { RedisService } from "@services/redis.service";
 import { EmailService } from "@services/email.service";
 
-@registerHandler(SendCaptchaCommand)
+@CommandHandler(SendCaptchaCommand)
 @Injectable()
 export class SendCaptchaCommandHandler implements IRequestHandler<SendCaptchaCommand> {
   @Inject(RedisService)

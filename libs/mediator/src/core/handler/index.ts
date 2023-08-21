@@ -1,2 +1,2 @@
 export * from './IRequestHandler'
-export * from './registerHandler'
+export * from './CommandHandler'

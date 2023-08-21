@@ -2,7 +2,7 @@ import type { IRequest } from '../IRequest';
 import { MediatorService } from '../../mediator.service';
 import type { IRequestHandler } from './IRequestHandler';
 
-export function registerHandler<T>(command: {
+export function CommandHandler<T>(command: {
   new (...args: any[]): IRequest<T>;
 }) {
   return (constructor: {
@@ -14,5 +14,5 @@ function register<T>(
   command: { new (): IRequest<T> },
   constructor: { new (): IRequestHandler<IRequest<any>> },
 ) {
-  MediatorService.registerHandler(command.name, constructor);
+  MediatorService.registerCommandHandler(command.name, constructor);
 }
