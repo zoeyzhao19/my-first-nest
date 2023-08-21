@@ -1,31 +1,36 @@
-
-
 ## Description
+A NestJS project mainly refer to  [meeting room](https://github.com/QuarkGluonPlasma/nestjs-course-code/tree/main/meeting_room_booking_system_backend?mode=light)
+## New Feature
+- [CQRS support](/libs//mediator/src/mediator.service.ts)
+- DDD design practice
+- mongo replica sets support
 
+## Usage
+- use docker to run mongo and redis containers
+- update your system host file for mongo replica sets mapping
 
-## Installation
-
-## Running the app
-
-## Test
-
-
-
-## License
-
-### 记录
-- 连接本地mongo副本集需要配置host映射
-
+  ```
   127.0.0.1 mongo1
   127.0.0.1 mongo2
   127.0.0.1 mongo3
-- 初始化角色
+  ```
+
+- initial `roles` collection
 
   ```bash
-  pnpm run seed:dev
+  pnpm install
+  pnpm seed:dev
   ```
-- mongo transaction
-   repository.save 不支持session
+- update **nodemailer_auth_email** and **nodemailer_auth_code** in `env.development` if you want to use email service
+- run the app
+
+  ```bash
+  pnpm start:dev
+  ```
+### Notes
+  If you want to use mongo transaction, here is an example.
+
+  For my test, **Repository.save()** does not work with transaction. 
    
   ```js
   @InjectEntityManager()
@@ -47,3 +52,10 @@
     }
   }
   ```
+
+## References
+- [mediatr-ts](https://github.com/m4ss1m0g/mediatr-ts)
+- [Domain-Driven-Design](https://khalilstemmler.com/articles/categories/domain-driven-design)
+- [CQRS](https://blog.christian-schou.dk/how-to-implement-cqrs-with-mediatr-in-asp-net/)
+## License
+MIT
