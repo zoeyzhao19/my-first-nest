@@ -26,13 +26,13 @@ export function Login() {
         const res = await login(values.username, values.password);
     
         if(res.status === 201 || res.status === 200) {
-            const { code, message: msg, data} = res.data;
+            const { msg, data} = res.data;
             if(msg === 'success') {
                 message.success('登录成功');
     
-                localStorage.setItem('access_token', data.accessToken);
-                localStorage.setItem('refresh_token', data.refreshToken);
-                localStorage.setItem('user_info', JSON.stringify(data.userInfo));
+                localStorage.setItem('access_token', data.access_token);
+                localStorage.setItem('refresh_token', data.refresh_token);
+                localStorage.setItem('user_info', JSON.stringify(data.user_info));
 
                 setTimeout(() => {
                     navigate('/');
@@ -46,7 +46,7 @@ export function Login() {
     }, []);
 
     return <div id="login-container">
-        <h1>会议室预订系统</h1>
+        {/* <h1>会议室预订系统</h1> */}
         <Form
             {...layout1}
             onFinish={onFinish}

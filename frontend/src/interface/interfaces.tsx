@@ -2,7 +2,7 @@ import axios from "axios";
 import { RegisterUser } from "../page/register/Register";
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3005/',
+    baseURL: 'http://localhost:3000/',
     timeout: 3000
 });
 
