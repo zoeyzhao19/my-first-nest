@@ -30,9 +30,19 @@ export class LoginCommandHandler implements IRequestHandler<LoginCommand> {
         expiresIn: this.configService.get('jwt_refresh_token_expires_time'),
       })
 
+      const user_info = {
+        username: user.username.value,
+        email: user.email.value,
+        nickname: user.nickname.value,
+        headPic: user.headPic,
+        isFrozen: user.isFrozen,
+        isAdmin: user.isAdmin
+      }
+
       return {
         access_token,
-        refresh_token
+        refresh_token,
+        user_info
       }
     }
 }

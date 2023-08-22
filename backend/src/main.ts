@@ -12,6 +12,8 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseInterceptor())
   app.useGlobalInterceptors(new LoggingInterceptor())
 
+  app.enableCors()
+
   const config = new DocumentBuilder()
     .setTitle('meeting room')
     .setDescription('API DOC')
