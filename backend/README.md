@@ -1,7 +1,7 @@
 ## Description
 A NestJS project for personal practice, mainly refer to  [meeting room](https://github.com/QuarkGluonPlasma/nestjs-course-code/tree/main/meeting_room_booking_system_backend?mode=light)
 ## New Feature
-- [CQRS support](/libs//mediator/src/mediator.service.ts)
+- [CQRS support](./libs//mediator/src/mediator.service.ts)
 - DDD design practice
 - mongo replica sets support
 
