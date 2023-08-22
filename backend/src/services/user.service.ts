@@ -114,4 +114,44 @@ export class UserService {
 
     await this.userRepository.save(user)
   }
+
+  async freeze(userId: string) {
+    const user = await this.userRepository.findOne({
+      where: {
+        _id: new ObjectId(userId)
+      }
+    })
+
+    if(!user) {
+      throw new UserError(UserError.UserNoExist)
+    }
+
+    if(user.isFrozen) {
+      throw new UserError(UserError.UserAlreadyFrozen)
+    }
+    
+    user.freeze()
+
+    await this.userRepository.save(user)
+  }
+
+  async unfreeze(userId: string) {
+    const user = await this.userRepository.findOne({
+      where: {
+        _id: new ObjectId(userId)
+      }
+    })
+
+    if(!user) {
+      throw new UserError(UserError.UserNoExist)
+    }
+
+    if(!user.isFrozen) {
+      throw new UserError(UserError.UserAlreadyUnfrozen)
+    }
+
+    user.unfreeze()
+
+    await this.userRepository.save(user)
+  }
 }

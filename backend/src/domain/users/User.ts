@@ -122,6 +122,16 @@ export class User extends AggregateRoot {
     this.updateTime = new Date()
   }
 
+  freeze() {
+    this.isFrozen = true
+    this.updateTime = new Date()
+  }
+
+  unfreeze() {
+    this.isFrozen = false
+    this.updateTime = new Date()
+  }
+
   // toPrimitives() {
     
   // }

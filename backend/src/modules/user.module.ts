@@ -8,6 +8,7 @@ import { SendCaptchaCommandHandler } from '@applications/user/commands/sendCaptc
 import { LoginCommandHandler } from '@applications/user/commands/login/LoginCommandHandler';
 import { RefreshTokenCommandHandler } from '@applications/user/commands/refreshToken/RefreshTokenCommandHandler';
 import { UpdatePasswordCommandHandler } from '@applications/user/commands/updatePassword/UpdatePasswordCommandHandler';
+import { UpdateFrozenStatusCommandHandler } from '@applications/user/commands/updateFrozenStatus/UpdateFrozenStatusCommandHandler';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -18,7 +19,8 @@ import { UpdatePasswordCommandHandler } from '@applications/user/commands/update
     SendCaptchaCommandHandler, 
     LoginCommandHandler, 
     RefreshTokenCommandHandler,
-    UpdatePasswordCommandHandler
+    UpdatePasswordCommandHandler,
+    UpdateFrozenStatusCommandHandler
   ],
   exports: [UserService]
 })

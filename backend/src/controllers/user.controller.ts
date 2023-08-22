@@ -13,6 +13,7 @@ import { UpdatePassRequest } from '@applications/user/commands/updatePassword/Up
 import { UpdatePasswordCommand } from '@applications/user/commands/updatePassword/UpdatePasswordCommand';
 import { Request } from 'express';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger'
+import { UpdateFrozenStatusCommand } from '@applications/user/commands/updateFrozenStatus/UpdateFrozenStatusCommand';
 
 @Controller('user')
 @ApiTags('user module')
@@ -80,6 +81,21 @@ export class UserController {
     await this._mediator.send(command)
   }
 
-  // transaction
+  @Post('unfreeze')
+  @RequireLogin()
+  @ApiBearerAuth()
+  @HttpCode(200)
+  async unfreeze(@UserInfo() userInfo: Request['user']) {
+    const command = new UpdateFrozenStatusCommand(userInfo.id, 'unfrozen')
+    await this._mediator.send(command)
+  }
 
+  @Post('freeze')
+  @RequireLogin()
+  @ApiBearerAuth()
+  @HttpCode(200)
+  async freeze(@UserInfo() userInfo: Request['user']) {
+    const command = new UpdateFrozenStatusCommand(userInfo.id, 'frozen')
+    await this._mediator.send(command)
+  }
 }

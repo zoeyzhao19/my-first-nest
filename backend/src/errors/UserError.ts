@@ -11,6 +11,8 @@ export class UserError extends AppError {
   static UserNoExist = '用户不存在'
   static PasswordError = '密码错误'
   static OldPasswordError = '旧密码错误'
+  static UserAlreadyFrozen = '该用户已是冻结状态'
+  static UserAlreadyUnfrozen = '该用户未被冻结'
 
   constructor(message: string, ...replacers: string[]) {
     super(message, ...replacers)
