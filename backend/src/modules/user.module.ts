@@ -9,6 +9,7 @@ import { LoginCommandHandler } from '@applications/user/commands/login/LoginComm
 import { RefreshTokenCommandHandler } from '@applications/user/commands/refreshToken/RefreshTokenCommandHandler';
 import { UpdatePasswordCommandHandler } from '@applications/user/commands/updatePassword/UpdatePasswordCommandHandler';
 import { UpdateFrozenStatusCommandHandler } from '@applications/user/commands/updateFrozenStatus/UpdateFrozenStatusCommandHandler';
+import { GetUsersQueryHandler } from '@applications/user/queries/getUsers/GetUsersQueryHandler';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -20,7 +21,8 @@ import { UpdateFrozenStatusCommandHandler } from '@applications/user/commands/up
     LoginCommandHandler, 
     RefreshTokenCommandHandler,
     UpdatePasswordCommandHandler,
-    UpdateFrozenStatusCommandHandler
+    UpdateFrozenStatusCommandHandler,
+    GetUsersQueryHandler
   ],
   exports: [UserService]
 })

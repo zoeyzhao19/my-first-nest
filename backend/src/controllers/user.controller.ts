@@ -14,6 +14,8 @@ import { UpdatePasswordCommand } from '@applications/user/commands/updatePasswor
 import { Request } from 'express';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger'
 import { UpdateFrozenStatusCommand } from '@applications/user/commands/updateFrozenStatus/UpdateFrozenStatusCommand';
+import { GetUserQuery } from '@applications/user/queries/getUsers/GetUsersQuery';
+import { GetUsersRequest } from '@applications/user/queries/getUsers/GetUsersRequest';
 
 @Controller('user')
 @ApiTags('user module')
@@ -98,4 +100,22 @@ export class UserController {
     const command = new UpdateFrozenStatusCommand(userInfo.id, 'frozen')
     await this._mediator.send(command)
   }
+
+  @Post('list')
+  @RequireLogin()
+  @ApiBearerAuth()
+  @HttpCode(200)
+  async getList(@Body() body: GetUsersRequest) {
+    const query = new GetUserQuery(
+      body.username,
+      body.email,
+      body.nickname,
+      +body.pageNum ?? 1,
+      +body.pageSize ?? 20
+    )
+    const result = await this._mediator.send(query)
+
+    return result
+  }
+
 }

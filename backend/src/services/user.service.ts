@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository} from '@nestjs/typeorm'
 import { User } from '../domain/users/User';
-import { MongoRepository} from 'typeorm'
+import { Like, MongoRepository} from 'typeorm'
 import { ObjectId} from 'mongodb'
 import { Username } from '../domain/users/Username';
 import { Nickname } from '../domain/users/Nickname';
@@ -153,5 +153,25 @@ export class UserService {
     user.unfreeze()
 
     await this.userRepository.save(user)
+  }
+
+  async getList(pageNum: number, pageSize: number, username = '', email = '', nickname = '') {
+    const condition: Record<string, any> = {};
+      if(username) {
+          condition.username = Like(`%${username}%`);   
+      }
+      if(nickname) {
+          condition.nickName = Like(`%${nickname}%`); 
+      }
+      if(email) {
+          condition.email = Like(`%${email}%`); 
+      }
+    const [users, total] = await this.userRepository.findAndCount({
+      where: condition,
+      skip: pageNum - 1,
+      take: pageSize
+    })
+
+    return [users, total] as [User[], number]
   }
 }
