@@ -11,7 +11,6 @@ export class GetUsersQueryHandler implements IRequestHandler<GetUserQuery> {
   private userService: UserService
 
   async handle(command: GetUserQuery) {
-    console.log('handle')
     const [users, total] = await this.userService.getList(
       command.pageNum, 
       command.pageSize,
@@ -19,7 +18,6 @@ export class GetUsersQueryHandler implements IRequestHandler<GetUserQuery> {
       command.email, 
       command.nickname
     )
-    console.log({users})
 
     const list = users.map(item => {
       return {

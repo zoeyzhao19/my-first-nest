@@ -5,8 +5,9 @@ export class SeedRole1692170998496 implements MigrationInterface {
 
     public async up(queryRunner: MongoQueryRunner): Promise<void> {
         await queryRunner.startTransaction()
-        const collection = queryRunner.databaseConnection.db().collection('roles')
-        const role= await collection.findOne({})
+
+        const role_collection = queryRunner.databaseConnection.db().collection('roles')
+        const role= await role_collection.findOne({})
         if(!role) {
             const roleSeed = [
                 {
@@ -18,7 +19,28 @@ export class SeedRole1692170998496 implements MigrationInterface {
                     permissions: []
                 }
             ]
-        await collection.insertMany(roleSeed)
+        await role_collection.insertMany(roleSeed)
+
+        const room_collection = queryRunner.databaseConnection.db().collection('rooms')
+        const room = await room_collection.findOne({})
+        if(!room) {
+            const roomSeed = [
+                {
+                    serialNumber: '101',
+                    state: {
+                        status: 'available'
+                    }
+                },
+                {
+                    serialNumber: '102',
+                    state: {
+                        status: 'available'
+                    }
+                }
+            ]
+            await room_collection.insertMany(roomSeed)
+        }
+
         await queryRunner.commitTransaction()
         }
     }
