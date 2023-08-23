@@ -26,14 +26,12 @@ export class SeedRole1692170998496 implements MigrationInterface {
         if(!room) {
             const roomSeed = [
                 {
-                    serialNumber: '101',
                     name: '会议室1',
                     state: {
                         status: 'available'
                     }
                 },
                 {
-                    serialNumber: '102',
                     name: '会议室2',
                     state: {
                         status: 'available'

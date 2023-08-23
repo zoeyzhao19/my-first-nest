@@ -174,4 +174,16 @@ export class UserService {
 
     return [users, total] as [User[], number]
   }
+
+  async findUserByIds(userIds: string[]) {
+    const users = await this.userRepository.find({
+      where: {
+        _id: {
+          $in: userIds.map(id => new ObjectId(id))
+        }
+      }
+    })
+
+    return users
+  }
 }

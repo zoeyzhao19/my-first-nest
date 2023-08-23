@@ -1,15 +1,15 @@
 import { RoomError } from "@errors/RoomError";
-import { Status } from "./Status";
+import { RoomStatus } from "@shared/status";
 import { AvailableState } from "./AvailableState";
 import { State } from "./State";
 import { BookedState } from "./BookedState";
 
 export class InuseState extends State {
   constructor() {
-    super(Status.Inuse)
+    super(RoomStatus.Inuse)
   }
 
-  free(): AvailableState {
+  release(): AvailableState {
     return new AvailableState()
   }
   
@@ -17,7 +17,7 @@ export class InuseState extends State {
     throw new RoomError(RoomError.RoomAlreadyInuse)
   }
 
-  inuse(): InuseState {
+  use(): InuseState {
     throw new RoomError(RoomError.RoomAlreadyInuse)
   }
 

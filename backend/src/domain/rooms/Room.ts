@@ -2,6 +2,9 @@ import { AggregateRoot } from "@libs/domain";
 import { Column, Entity, ObjectId, ObjectIdColumn } from "typeorm";
 import { State } from "./State";
 import { AvailableState } from "./AvailableState";
+import { RoomStatus } from "@shared/status";
+import { InuseState } from "./InuseState";
+import { RoomError } from "@errors/RoomError";
 
 @Entity({
   name: 'rooms'
@@ -12,14 +15,9 @@ export class Room extends AggregateRoot {
   public id: ObjectId
 
   /**
-   * 房间号
-   */
-  @Column()
-  serialNumber: number
-
-  /**
    * 会议室名
    */
+  @Column()
   name: string;
 
   @Column()
@@ -31,22 +29,45 @@ export class Room extends AggregateRoot {
   @Column()
   scale: number
 
-  constructor(serialNumber: number, scale: number) {
+  constructor(id: ObjectId, name: string, scale: number, state: State) {
     super()
-    this.serialNumber = serialNumber
-    this.state = new AvailableState()
+    this.id = id
+    this.name = name
+    this.state = state
     this.scale = scale
   }
 
-  reserve() {
+  book() {
     this.state = this.state.book()
   }
 
-  inuse() {
-    this.state = this.state.inuse()
+  use() {
+    this.state = this.state.use()
   }
 
-  free() {
-    this.state = this.state.free()
+  release() {
+    this.state = this.state.release()
   }
+
+  // TODO in mappings/mapper
+  // find other way to mapper
+  static fromPrimitive(id: ObjectId, name: string, scale: number, status: RoomStatus) {
+    let state: State
+    switch(status) {
+      case RoomStatus.Available:
+        state = new AvailableState()
+        break;
+      case RoomStatus.Inuse:
+        state = new InuseState()
+        break;
+      case RoomStatus.Booked:
+        state = new AvailableState()
+        break;
+      default:
+        throw new RoomError(RoomError.InvalidRoomStatus)
+    }
+    const room = new Room(id, name, scale, state)
+    return room
+  }
+
 }

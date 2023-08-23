@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Room } from '../domain/rooms/Room';
-import { Like, MongoRepository } from 'typeorm';
+import { ClientSession, Like, MongoRepository } from 'typeorm';
+import { ObjectId } from 'mongodb';
+import { RoomStatus } from '@shared/status';
+import { RoomError } from '@errors/RoomError';
 
 @Injectable()
 export class RoomService {
@@ -22,5 +25,31 @@ export class RoomService {
     })
 
     return [rooms, total] as [Room[], number]
+  }
+
+  async bookRoom(roomId: string, session: ClientSession) {
+    let room = await this.roomRepository.findOne({
+      where: {
+        _id: new ObjectId(roomId)
+      }
+    })
+
+    if(!room) {
+      throw new RoomError(RoomError.RoomNoExisted)
+    }
+
+    if(room.state.status !== RoomStatus.Available) {
+      throw new RoomError(RoomError.RoomNoAvailable)
+    }
+    
+    room = Room.fromPrimitive(room.id, room.name, room.scale, room.state.status)
+
+    room.book()
+
+    await this.roomRepository.updateOne({
+      _id: new ObjectId(room.id)
+    }, {$set: room}, {session})
+
+    return room
   }
 }

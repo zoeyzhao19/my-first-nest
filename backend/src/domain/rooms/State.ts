@@ -1,18 +1,18 @@
 import { AvailableState } from "./AvailableState"
 import { InuseState } from "./InuseState"
 import { BookedState } from "./BookedState"
-import { Status } from "./Status"
+import { RoomStatus } from "@shared/status"
 
 export abstract class State {
-  status: Status
-  constructor(status: Status) { 
+  status: RoomStatus
+  constructor(status: RoomStatus) { 
     this.status = status
   }
 
-  abstract free(): AvailableState
+  abstract release(): AvailableState
 
   abstract book(): BookedState
 
-  abstract inuse(): InuseState
+  abstract use(): InuseState
 
 }

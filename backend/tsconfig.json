@@ -28,6 +28,15 @@
       "@applications/*": [
         "src/applications/*"
       ],
+      "@controllers/*": [
+        "src/controllers/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
+      ],
+      "@domain/*": [
+        "src/domain/*"
+      ],
       "@services/*": [
         "src/services/*"
       ],
