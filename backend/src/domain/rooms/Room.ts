@@ -17,6 +17,11 @@ export class Room extends AggregateRoot {
   @Column()
   serialNumber: number
 
+  /**
+   * 会议室名
+   */
+  name: string;
+
   @Column()
   state: State
 

@@ -13,6 +13,8 @@ import { EmailModule } from './email.module';
 import { RoleModule } from './role.module';
 import { APP_GUARD } from '@nestjs/core';
 import { LoginGuard } from '../guards/login.guard';
+import { RoomModule } from './room.module';
+import { Room } from '../domain/rooms/Room';
 
 @Module({
   imports: [
@@ -49,12 +51,13 @@ import { LoginGuard } from '../guards/login.guard';
           type: 'mongodb',
           url: configService.get('mongo_connection_url'),
           database: configService.get('mongo_database'),
-          entities: [User, Permission, Role],
+          entities: [User, Permission, Role, Room],
           // logger: process.env.NODE_ENV === 'development' ? 'simple-console' : undefined
         }
       },
       inject: [ConfigService]
-    })
+    }),
+    RoomModule
   ],
   providers: [
     {
