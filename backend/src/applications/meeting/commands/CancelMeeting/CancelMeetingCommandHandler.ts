@@ -25,7 +25,7 @@ export class CancelMeetingCommandHandler implements IRequestHandler<CancelMeetin
     try {
       session.startTransaction()
 
-      const roomId = await this.meetingService.cancelMeeting(command.cancellerId, command.meetingNum, session)
+      const roomId = await this.meetingService.cancelMeeting(command.cancellerId, command.isAdmin, command.meetingNum, session)
 
       await this.roomService.releaseRoom(roomId, session)
       await session.commitTransaction()

@@ -41,7 +41,7 @@ export class MeetingController {
   @ApiBearerAuth()
   @RequireLogin()
   async cancel(@UserInfo() userInfo: Request['user'], @Body() body: CancelMeetingRequest) {
-    const command = new CancelMeetingCommand(userInfo.id, +body.meeting_num)
+    const command = new CancelMeetingCommand(userInfo.id, userInfo.isAdmin, +body.meeting_num)
 
     await this._mediator.send(command)
   }

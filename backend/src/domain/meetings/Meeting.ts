@@ -6,6 +6,7 @@ import { MeetingError } from "@errors/Meetingerror";
 import { MeetingStatus } from "@shared/status";
 import { InProgressState } from "./InProgressState";
 import { FinishedState } from "./FinishedState";
+import { CancelledState } from "./CancelledState";
 
 @Entity({
   name: 'meetings'
@@ -190,6 +191,9 @@ export class Meeting extends AggregateRoot {
         break;
       case MeetingStatus.Finished:
         state = new FinishedState()
+        break;
+      case MeetingStatus.Cancelled:
+        state = new CancelledState()
         break;
       default:
         throw new MeetingError(MeetingError.InvalidMeetingStatus)

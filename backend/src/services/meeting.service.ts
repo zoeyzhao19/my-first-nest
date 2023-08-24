@@ -77,7 +77,7 @@ export class MeetingService {
     return meeting
   }
 
-  async cancelMeeting(canceller: string,  meetingNum: number, session: ClientSession) {
+  async cancelMeeting(cancellerId: string, isAdmin: boolean, meetingNum: number, session: ClientSession) {
     let meeting = await this.meetingRepository.findOne({
       where: {
         meetingNum: +meetingNum
@@ -88,7 +88,7 @@ export class MeetingService {
       throw new MeetingError(MeetingError.MeetingNoFound)
     }
 
-    if(meeting.issuerId !== canceller) {
+    if(meeting.issuerId !== cancellerId && !isAdmin) {
       throw new MeetingError(MeetingError.MeetingCancelLimited)
     }
 

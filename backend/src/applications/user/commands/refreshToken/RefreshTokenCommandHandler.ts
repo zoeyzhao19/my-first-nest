@@ -21,16 +21,18 @@ export class RefreshTokenCommandHandler implements IRequestHandler<RefreshTokenC
 
       const access_token = this.jwtService.sign({
         sub: payload.sub,
-        username: payload.username.value,
-        email: payload.email.value
+        username: payload.username,
+        email: payload.email,
+        isAdmin: payload.isAdmin
       }, {
         expiresIn: this.configService.get('jwt_access_token_expires_time'),
       })
 
       const refresh_token = this.jwtService.sign({
         sub: payload.sub,
-        username: payload.username.value,
-        email: payload.email.value,
+        username: payload.username,
+        email: payload.email,
+        isAdmin: payload.isAdmin
       }, {
         expiresIn: this.configService.get('jwt_refresh_token_expires_time'),
       })

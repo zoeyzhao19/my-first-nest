@@ -5,10 +5,13 @@ export class CancelMeetingCommand implements IRequest<void> {
 
   cancellerId: string;
 
+  isAdmin: boolean;
+
   meetingNum: number
 
-  constructor(cancellerId: string, meetingNum: number) {
+  constructor(cancellerId: string, isAdmin: boolean, meetingNum: number) {
     this.cancellerId = cancellerId
+    this.isAdmin = isAdmin
     this.meetingNum = meetingNum
   }
 }
