@@ -3,7 +3,9 @@ import { Column, Entity, ObjectId, ObjectIdColumn } from "typeorm";
 import { State } from "./State";
 import { ScheduledState } from "./ScheduledState";
 import { MeetingError } from "@errors/Meetingerror";
-import { Room } from "@domain/rooms/Room";
+import { MeetingStatus } from "@shared/status";
+import { InProgressState } from "./InProgressState";
+import { FinishedState } from "./FinishedState";
 
 @Entity({
   name: 'meetings'
@@ -62,7 +64,7 @@ export class Meeting extends AggregateRoot {
   }[];
 
   /**
-   * 出席人列表
+   * 出席/签到人列表
    */
   @Column()
   presentees: {
@@ -104,7 +106,20 @@ export class Meeting extends AggregateRoot {
     participants: {
       id: string;
       name: string;
-    }[]
+    }[],
+    presentees?: {
+      id: string;
+      name: string;
+    }[],
+    rejectors?: {
+      id: string;
+      name: string;
+    }[],
+    absentees?: {
+      id: string;
+      name: string;
+    }[],
+    state?: State
   ) {
     super()
     this.meetingNum = meetingNum
@@ -114,7 +129,10 @@ export class Meeting extends AggregateRoot {
     this.startTime = startTime
     this.endTime = endTime
     this.participants = participants
-    this.state = new ScheduledState()
+    this.presentees = presentees ?? []
+    this.rejectors = rejectors ?? []
+    this.absentees = absentees ?? []
+    this.state = state ?? new ScheduledState()
   }
 
   progress() {
@@ -157,5 +175,38 @@ export class Meeting extends AggregateRoot {
     if(!this.absentees.some(item => item.id === absentee.id)) {
       this.absentees.push(absentee)
     }
+  }
+
+  // TODO in mappings/mapper
+  // find other way to mapper
+  static fromPrimitive(plainData: Record<string, any>) {
+    let state: State
+    switch(plainData.state.status) {
+      case MeetingStatus.Scheduled:
+        state = new ScheduledState()
+        break;
+      case MeetingStatus.InProgress:
+        state = new InProgressState()
+        break;
+      case MeetingStatus.Finished:
+        state = new FinishedState()
+        break;
+      default:
+        throw new MeetingError(MeetingError.InvalidMeetingStatus)
+    }
+    const meeting = new Meeting(
+      plainData.meetingNum,
+      plainData.room,
+      plainData.subject,
+      plainData.issuerId,
+      plainData.startTime,
+      plainData.endTime,
+      plainData.participants,
+      plainData.presentees,
+      plainData.rejectors,
+      plainData.absentees,
+      state
+    )
+    return meeting
   }
 }

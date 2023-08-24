@@ -2,6 +2,7 @@ import { InProgressState } from '@domain/meetings/InProgressState';
 import { Meeting } from '@domain/meetings/Meeting';
 import { ScheduledState } from '@domain/meetings/ScheduledState';
 import { Room } from '@domain/rooms/Room';
+import { MeetingError } from '@errors/Meetingerror';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MeetingStatus } from '@shared/status';
@@ -74,6 +75,113 @@ export class MeetingService {
     })
 
     return meeting
+  }
+
+  async cancelMeeting(canceller: string,  meetingNum: number, session: ClientSession) {
+    let meeting = await this.meetingRepository.findOne({
+      where: {
+        meetingNum: +meetingNum
+      }
+    })
+
+    if(!meeting) {
+      throw new MeetingError(MeetingError.MeetingNoFound)
+    }
+
+    if(meeting.issuerId !== canceller) {
+      throw new MeetingError(MeetingError.MeetingCancelLimited)
+    }
+
+    if(meeting.startTime < new Date()) {
+      throw new MeetingError(MeetingError.MeetingAlreadyBegin)
+    }
+
+    meeting = Meeting.fromPrimitive(meeting)
+
+    meeting.cancel()
+
+    await this.meetingRepository.updateOne({
+      meetingNum: +meetingNum
+    }, {$set: meeting}, {session})
+
+    return meeting.room.id
+  }
+
+  async rejectMeeting(rejectorId: string, rejectorName: string, meetingNum: number) {
+    let meeting = await this.meetingRepository.findOne({
+      where: {
+        meetingNum: meetingNum
+      }
+    })
+
+    if(!meeting) {
+      throw new MeetingError(MeetingError.MeetingNoFound)
+    }
+
+    meeting = Meeting.fromPrimitive(meeting)
+
+    if(!meeting.participants.some(participant => participant.id === rejectorId)) {
+      throw new MeetingError(MeetingError.NotInInvitedList)
+    } 
+    
+    if(meeting.issuerId === rejectorId) {
+      throw new MeetingError(MeetingError.MeetingIssuerCannotReject)
+    }
+    
+    if(meeting.state.status !== MeetingStatus.Scheduled) {
+      throw new MeetingError(MeetingError.CanRejectScheduledMeetingOnly)
+    }
+
+    if(!meeting.rejectors.some(rejector => rejector.id === rejectorId)) {
+      meeting.updateRejectorList({
+        id: rejectorId,
+        name: rejectorName
+      })
+    }
+
+
+    await this.meetingRepository.updateOne({
+      meetingNum: meetingNum
+    }, {$set: meeting})
+
+    return meeting.room.id
+  }
+
+  async presentMeeting(presenteeId: string, presenteeName: string, meetingNum: number) {
+    const meeting = await this.meetingRepository.findOne({
+      where: {
+        meetingNum: meetingNum
+      }
+    })
+
+    if(!meeting) {
+      throw new MeetingError(MeetingError.MeetingNoFound)
+    }
+
+    if(!meeting.participants.some(participant => participant.id === presenteeId)) {
+      throw new MeetingError(MeetingError.NotInInvitedList)
+    }
+
+    if(meeting.state.status === MeetingStatus.Finished) {
+      throw new MeetingError(MeetingError.MeetingAlreadyFinished)
+    }
+
+    if(meeting.state.status === MeetingStatus.Cancelled) {
+      throw new MeetingError(MeetingError.MeetingAlreadyCancelled)
+    }
+
+    
+
+    if(!meeting.presentees.some(presentee => presentee.id === presenteeId)) {
+      meeting.updatePresenteeList({
+        id: presenteeId,
+        name: presenteeName
+      })
+    }
+
+    await this.meetingRepository.updateOne({
+      meetingNum: meetingNum
+    }, {$set: meeting})
   }
 
   private async generateMeetingNum() {

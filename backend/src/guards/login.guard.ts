@@ -8,6 +8,7 @@ declare module 'express' {
     user: {
       id: string
       email: string;
+      username: string;
     }
   }
 }
@@ -47,7 +48,8 @@ export class LoginGuard implements CanActivate {
 
       request.user = {
         id: payload.sub,
-        email: payload.email
+        email: payload.email,
+        username: payload.username
       }
 
       return true

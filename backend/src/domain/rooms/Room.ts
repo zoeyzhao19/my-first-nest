@@ -5,6 +5,7 @@ import { AvailableState } from "./AvailableState";
 import { RoomStatus } from "@shared/status";
 import { InuseState } from "./InuseState";
 import { RoomError } from "@errors/RoomError";
+import { BookedState } from "./BookedState";
 
 @Entity({
   name: 'rooms'
@@ -29,9 +30,8 @@ export class Room extends AggregateRoot {
   @Column()
   scale: number
 
-  constructor(id: ObjectId, name: string, scale: number, state: State) {
+  constructor(name: string, scale: number, state: State) {
     super()
-    this.id = id
     this.name = name
     this.state = state
     this.scale = scale
@@ -61,12 +61,12 @@ export class Room extends AggregateRoot {
         state = new InuseState()
         break;
       case RoomStatus.Booked:
-        state = new AvailableState()
+        state = new BookedState()
         break;
       default:
         throw new RoomError(RoomError.InvalidRoomStatus)
     }
-    const room = new Room(id, name, scale, state)
+    const room = new Room(name, scale, state)
     return room
   }
 

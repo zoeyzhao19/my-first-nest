@@ -14,12 +14,12 @@ export class GetRoomRequest {
     type: Number,
     required: false
   })
-  pageNum: number;
+  page_num: number;
 
   @ApiProperty({
     description: '每页条数',
     type: Number,
     required: false
   })
-  pageSize: number;
+  page_size: number;
 }

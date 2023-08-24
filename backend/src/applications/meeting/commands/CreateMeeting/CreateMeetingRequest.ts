@@ -6,19 +6,19 @@ export class CreateMeetingRequest {
     description: '开始时间',
     type: String,
   })
-  startTime: string;
+  start_time: string;
 
   @ApiProperty({
     description: '结束时间',
     type: String,
   })
-  endTime: string;
+  end_time: string;
 
   @ApiProperty({
     description: '会议室Id',
     type: String,
   })
-  roomId: string;
+  room_id: string;
 
   @ApiProperty({
     description: '会议主题',

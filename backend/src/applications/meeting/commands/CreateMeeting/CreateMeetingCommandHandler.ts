@@ -51,7 +51,7 @@ export class CreateMeetingCommandHandler implements IRequestHandler<CreateMeetin
         {
           issuerId: command.issuerId,
           room: {
-            id: room.id.toString(),
+            id: command.roomId,
             name: room.name
           },
           subject: command.subject,

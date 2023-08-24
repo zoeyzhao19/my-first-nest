@@ -18,8 +18,8 @@ export class RoomController {
   async getList(@Body() body: GetRoomRequest) {
     const query = new GetRoomQuery(
       body.name,
-      +body.pageNum ?? 1,
-      +body.pageSize ?? 20
+      +body.page_num ?? 1,
+      +body.page_size ?? 20
     )
     const result = await this._mediator.send(query)
     return result

@@ -47,9 +47,31 @@ export class RoomService {
     room.book()
 
     await this.roomRepository.updateOne({
-      _id: new ObjectId(room.id)
+      _id: new ObjectId(roomId)
     }, {$set: room}, {session})
 
     return room
+  }
+
+  async releaseRoom(roomId: string, session: ClientSession) {
+    let room = await this.roomRepository.findOne({
+      where: {
+        _id: new ObjectId(roomId)
+      }
+    })
+
+    if(!room) {
+      throw new RoomError(RoomError.RoomNoExisted)
+    }
+
+    room = Room.fromPrimitive(room.id, room.name, room.scale, room.state.status)
+
+    room.release()
+
+    await this.roomRepository.updateOne(
+      { _id: new ObjectId(roomId) },
+      { $set: room },
+      { session }  
+    )
   }
 }

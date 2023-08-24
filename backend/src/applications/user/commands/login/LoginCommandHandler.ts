@@ -20,7 +20,7 @@ export class LoginCommandHandler implements IRequestHandler<LoginCommand> {
 
     public async handle(command: LoginCommand){
       const user = await this.userService.login(command.username, command.password)
-      const payload = { sub: user.id.toString(), username: user.username, email: user.email.value };
+      const payload = { sub: user.id.toString(), username: user.username.value, email: user.email.value };
 
       const access_token = this.jwtService.sign(payload, {
         expiresIn: this.configService.get('jwt_access_token_expires_time'),
