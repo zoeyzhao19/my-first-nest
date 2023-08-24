@@ -9,6 +9,7 @@ import { UserModule } from './user.module';
 import { CancelMeetingCommandHandler } from '@applications/meeting/commands/CancelMeeting/CancelMeetingCommandHandler';
 import { RejectMeetingCommandHandler } from '@applications/meeting/commands/RejectMeeting/RejectMeetingCommandHandler';
 import { PresentMeetingCommandHandler } from '@applications/meeting/commands/PresentMeeting/PresentMeetingCommandHandler';
+import { CreateMeetingCommandValidation } from '@applications/meeting/commands/CreateMeeting/CreateMeetingCommandValidation';
 
 @Module({
   imports: [
@@ -24,6 +25,8 @@ import { PresentMeetingCommandHandler } from '@applications/meeting/commands/Pre
     MeetingService,
 
     CreateMeetingCommandHandler,
+    CreateMeetingCommandValidation,
+
     CancelMeetingCommandHandler,
     RejectMeetingCommandHandler,
     PresentMeetingCommandHandler

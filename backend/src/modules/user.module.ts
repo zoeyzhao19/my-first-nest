@@ -10,15 +10,23 @@ import { RefreshTokenCommandHandler } from '@applications/user/commands/refreshT
 import { UpdatePasswordCommandHandler } from '@applications/user/commands/updatePassword/UpdatePasswordCommandHandler';
 import { UpdateFrozenStatusCommandHandler } from '@applications/user/commands/updateFrozenStatus/UpdateFrozenStatusCommandHandler';
 import { GetUsersQueryHandler } from '@applications/user/queries/getUsers/GetUsersQueryHandler';
+import { RegisterCommandValidation } from '@applications/user/commands/register/RegisterCommandValidation';
+import { LoginCommandValidation } from '@applications/user/commands/login/LoginCommandValidation';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [
     UserService, 
+
     RegisterCommandHandler, 
+    RegisterCommandValidation,
+
     SendCaptchaCommandHandler, 
+
     LoginCommandHandler, 
+    LoginCommandValidation,
+    
     RefreshTokenCommandHandler,
     UpdatePasswordCommandHandler,
     UpdateFrozenStatusCommandHandler,
