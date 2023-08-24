@@ -8,7 +8,6 @@ import { Nickname } from '../domain/users/Nickname';
 import { Password } from '../domain/users/Password';
 import { Email } from '../domain/users/Email';
 import { UserError } from '@errors/UserError';
-import { UserRegisteredDomainEvent } from 'src/domain/users/events/UserRegisteredDomainEvent';
 import { Role } from 'src/domain/roles/Role';
 import { EventbusService } from '@libs/eventbus';
 

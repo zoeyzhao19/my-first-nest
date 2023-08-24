@@ -1,12 +1,9 @@
-import { InProgressState } from '@domain/meetings/InProgressState';
 import { Meeting } from '@domain/meetings/Meeting';
-import { ScheduledState } from '@domain/meetings/ScheduledState';
-import { Room } from '@domain/rooms/Room';
 import { MeetingError } from '@errors/Meetingerror';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MeetingStatus } from '@shared/status';
-import { Any, ClientSession, In, MongoRepository } from 'typeorm';
+import { ClientSession, MongoRepository } from 'typeorm';
 
 interface CreateMeeting {
   issuerId: string;
