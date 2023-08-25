@@ -5,16 +5,25 @@ A NestJS project for personal practice, mainly refer to  [meeting room](https://
 - DDD design practice
 - mongo replica sets support
 
-## Usage
-- This repo provide an optional `docker-compose.yaml` usage to run mongo and redis,  or you can run mongo and redis on your local machine
-- **If using docker compose to serve the mongo service**, then update system host file for mongo replica set mapping
+## If mongo service run in the docker
+- This repo provide an optional `docker-compose.yaml` usage to run mongo and redis (*or you can run mongo and redis on your local machine*)
+- **If use docker compose to serve the mongo service**
+  ```bash
+  cp docker-compose.yaml.demo docker-compose.yaml
+  ```
+  update your `mongo_connection_url` in your env file
+  ```env
+  mongo_connection_url = mongodb://admin:12345678t@mongo1:27017,mongo2:27018,mongo3:27019/?authSource=admin&readPreference=primary&replicaSet=rs0
+  ```
+  update system host file for mongo replica set mapping
 
   ```
   127.0.0.1 mongo1
   127.0.0.1 mongo2
   127.0.0.1 mongo3
   ```
-
+ 
+## Usage
 - initial `roles` collection
 
   ```bash
