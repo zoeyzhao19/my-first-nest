@@ -1,11 +1,11 @@
-import { IRequestHandler, CommandHandler } from "@libs/mediator";
+import { IRequestHandler, MediatorHandler } from "@libs/mediator";
 import { RegisterCommand } from "./RegisterCommand";
 import { Inject, Injectable } from "@nestjs/common";
 import { UserService } from "@services/user.service";
 import { RedisService } from "@services/redis.service";
 import { UserError } from "@errors/UserError";
 
-@CommandHandler(RegisterCommand)
+@MediatorHandler(RegisterCommand)
 @Injectable()
 export class RegisterCommandHandler implements IRequestHandler<RegisterCommand> {
   @Inject(UserService)

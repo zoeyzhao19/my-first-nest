@@ -1,10 +1,10 @@
-import { CommandHandler, IRequestHandler } from "@libs/mediator";
+import { MediatorHandler, IRequestHandler } from "@libs/mediator";
 import { RejectMeetingCommand } from "./RejectMeetingCommand";
 import { Inject, Injectable } from "@nestjs/common";
 import { MeetingService } from "@services/meeting.service";
 
 @Injectable()
-@CommandHandler(RejectMeetingCommand)
+@MediatorHandler(RejectMeetingCommand)
 export class RejectMeetingCommandHandler implements IRequestHandler<RejectMeetingCommand> {
 
   @Inject(MeetingService)

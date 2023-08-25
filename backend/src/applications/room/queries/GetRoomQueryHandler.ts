@@ -1,9 +1,9 @@
-import { CommandHandler, IRequestHandler } from "@libs/mediator";
+import { MediatorHandler, IRequestHandler } from "@libs/mediator";
 import { GetRoomQuery } from "./GetRoomQuery";
 import { RoomService } from "@services/room.service";
 import { Inject } from "@nestjs/common";
 
-@CommandHandler(GetRoomQuery)
+@MediatorHandler(GetRoomQuery)
 export class GetRoomQueryHandler implements IRequestHandler<GetRoomQuery> {
 
   @Inject(RoomService)

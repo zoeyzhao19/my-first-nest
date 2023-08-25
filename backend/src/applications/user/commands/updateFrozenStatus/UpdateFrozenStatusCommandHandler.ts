@@ -1,10 +1,10 @@
-import { CommandHandler, IRequestHandler } from "@libs/mediator";
+import { MediatorHandler, IRequestHandler } from "@libs/mediator";
 import { UpdateFrozenStatusCommand } from "./UpdateFrozenStatusCommand";
 import { Inject, Injectable } from "@nestjs/common";
 import { UserService } from "@services/user.service";
 
 @Injectable()
-@CommandHandler(UpdateFrozenStatusCommand)
+@MediatorHandler(UpdateFrozenStatusCommand)
 export class UpdateFrozenStatusCommandHandler implements IRequestHandler<UpdateFrozenStatusCommand> {
 
   @Inject(UserService)

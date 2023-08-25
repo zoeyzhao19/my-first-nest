@@ -1,11 +1,11 @@
-import { IRequestHandler, CommandHandler } from "@libs/mediator";
+import { IRequestHandler, MediatorHandler } from "@libs/mediator";
 import { RefreshTokenCommand } from "./RefreshTokenCommand";
 import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 
 
-@CommandHandler(RefreshTokenCommand)
+@MediatorHandler(RefreshTokenCommand)
 @Injectable()
 export class RefreshTokenCommandHandler implements IRequestHandler<RefreshTokenCommand> {
 

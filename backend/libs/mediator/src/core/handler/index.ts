@@ -1,2 +1,2 @@
 export * from './IRequestHandler'
-export * from './CommandHandler'
+export * from './MediatorHandler'

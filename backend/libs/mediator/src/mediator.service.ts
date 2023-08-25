@@ -6,17 +6,17 @@ import { ModuleRef } from '@nestjs/core';
 
 @Injectable()
 export class MediatorService {
-  static commandHandlers: Map<
+  static mediatorHandlers: Map<
     string,
     { new (): IRequestHandler<IRequest<any>> }
   > = new Map();
   static pipelines: Map<string, { new (): IPipelineHandler }[]> = new Map();
 
-  static registerCommandHandler<T>(
+  static registerMediatorHandler<T>(
     commandName: string,
     handler: { new (): IRequestHandler<IRequest<T>> },
   ) {
-    this.commandHandlers.set(commandName, handler);
+    this.mediatorHandlers.set(commandName, handler);
   }
 
   static registerPipelineHandler(
@@ -35,7 +35,7 @@ export class MediatorService {
   async send<T extends IRequest>(
     command: T,
   ): Promise<T extends IRequest<infer R> ? R : never> {
-    const Handler = MediatorService.commandHandlers.get(command.constructor.name);
+    const Handler = MediatorService.mediatorHandlers.get(command.constructor.name);
     let handler: IRequestHandler<T>;
     if (!Handler)
       throw new Error(

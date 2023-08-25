@@ -1,4 +1,4 @@
-import { IRequestHandler, CommandHandler } from "@libs/mediator";
+import { IRequestHandler, MediatorHandler } from "@libs/mediator";
 import { LoginCommand } from "./LoginCommand";
 import { JwtService } from "@nestjs/jwt";
 import { Inject, Injectable } from "@nestjs/common";
@@ -6,7 +6,7 @@ import { UserService } from "@services/user.service";
 import { ConfigService } from "@nestjs/config";
 
 @Injectable()
-@CommandHandler(LoginCommand)
+@MediatorHandler(LoginCommand)
 export class LoginCommandHandler implements IRequestHandler<LoginCommand> {
 
     @Inject(JwtService)

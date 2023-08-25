@@ -1,18 +1,16 @@
-import { CommandHandler, IRequestHandler } from "@libs/mediator";
+import { MediatorHandler, IRequestHandler } from "@libs/mediator";
 import { CreateMeetingCommand } from "./CreateMeetingCommand";
 import { MeetingService } from "@services/meeting.service";
 import { Inject, Injectable } from "@nestjs/common";
 import { RoomService } from "@services/room.service";
 import { RoomError } from "@errors/RoomError";
-import { RoomStatus } from "@shared/status";
 import { InjectEntityManager } from "@nestjs/typeorm";
 import { MongoEntityManager } from "typeorm";
 import { UserService } from "@services/user.service";
-import { Meeting } from "@domain/meetings/Meeting";
 import { MeetingError } from "@errors/Meetingerror";
 
 @Injectable()
-@CommandHandler(CreateMeetingCommand)
+@MediatorHandler(CreateMeetingCommand)
 export class CreateMeetingCommandHandler implements IRequestHandler<CreateMeetingCommand> {
 
   @Inject(MeetingService)

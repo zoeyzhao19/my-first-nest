@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MediatorService } from './mediator.service';
 import { IRequest, ResponseFlags } from './core/IRequest';
-import { CommandHandler } from './core/handler/CommandHandler';
+import { MediatorHandler } from './core/handler/MediatorHandler';
 import { IRequestHandler } from './core/handler/IRequestHandler';
 import { PipelineHandler } from './core/pipeline/PipelineHandler';
 import { IPipelineHandler } from './core/pipeline/IPipelineHandler';
@@ -30,7 +30,7 @@ class CourseCommand implements IRequest<CourseResponse> {
   }
 }
 
-@CommandHandler(CourseCommand)
+@MediatorHandler(CourseCommand)
 @Injectable()
 class CourseCommandHandler
   implements IRequestHandler<CourseCommand>
@@ -68,8 +68,8 @@ describe('MediatorService', () => {
   });
 
   test('should execute proper handler and pipeline', async () => {
-    expect(MediatorService.commandHandlers.size).toBe(1);
-    expect(MediatorService.commandHandlers.get(CourseCommand.name)).toBe(
+    expect(MediatorService.mediatorHandlers.size).toBe(1);
+    expect(MediatorService.mediatorHandlers.get(CourseCommand.name)).toBe(
       CourseCommandHandler,
     );
 

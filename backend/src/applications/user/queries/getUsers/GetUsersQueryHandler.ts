@@ -1,10 +1,10 @@
-import { CommandHandler, IRequestHandler } from "@libs/mediator";
+import { MediatorHandler, IRequestHandler } from "@libs/mediator";
 import { GetUserQuery } from "./GetUsersQuery";
 import { Inject, Injectable } from "@nestjs/common";
 import { UserService } from "@services/user.service";
 
 @Injectable()
-@CommandHandler(GetUserQuery)
+@MediatorHandler(GetUserQuery)
 export class GetUsersQueryHandler implements IRequestHandler<GetUserQuery> {
 
   @Inject(UserService)

@@ -1,4 +1,4 @@
-import { CommandHandler, IRequestHandler } from "@libs/mediator";
+import { MediatorHandler, IRequestHandler } from "@libs/mediator";
 import { CancelMeetingCommand } from "./CancelMeetingCommand";
 import { Inject, Injectable } from "@nestjs/common";
 import { MeetingService } from "@services/meeting.service";
@@ -7,7 +7,7 @@ import { InjectEntityManager } from "@nestjs/typeorm";
 import { RoomService } from "@services/room.service";
 
 @Injectable()
-@CommandHandler(CancelMeetingCommand)
+@MediatorHandler(CancelMeetingCommand)
 export class CancelMeetingCommandHandler implements IRequestHandler<CancelMeetingCommand> {
 
   @Inject(MeetingService)
