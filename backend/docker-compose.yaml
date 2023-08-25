@@ -4,8 +4,8 @@ services:
   mongo1:
     image: mongo:7
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 12345678
     volumes:
       - /data/mongo1:/data/db
       - ./mongo.key:/data/mongo.key.temp
@@ -71,8 +71,8 @@ services:
       - mongo2
       - mongo3
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 12345678
     volumes:
       - ./scripts/mongo_rs_init.sh:/scripts/mongo_rs_init.sh
     entrypoint: [ "/scripts/mongo_rs_init.sh" ] 

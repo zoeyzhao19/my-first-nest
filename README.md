@@ -6,8 +6,8 @@ A NestJS project for personal practice, mainly refer to  [meeting room](https://
 - mongo replica sets support
 
 ## Usage
-- use docker to run mongo and redis containers
-- update system host file for mongo replica sets mapping
+- This repo provide an optional `docker-compose.yaml` usage to run mongo and redis,  or you can run mongo and redis on your local machine
+- **If using docker compose to serve the mongo service**, then update system host file for mongo replica set mapping
 
   ```
   127.0.0.1 mongo1
